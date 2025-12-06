@@ -4,16 +4,19 @@ import { ChevronLeft, ShoppingCart, Heart, Share2, Check, Minus, Plus, ChevronDo
 import { shoes } from '../data/shoes';
 import ProductCard from '../components/product/ProductCard';
 import { motion, AnimatePresence } from 'framer-motion';
+import { useCart } from '../context/CartContext';
 
 const ShoePage = () => {
   const { id } = useParams<{ id: string }>();
   const shoe = shoes.find((s) => s.id === id);
+  const { addToCart } = useCart();
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
   const [selectedColor, setSelectedColor] = useState<string>('');
   const [quantity, setQuantity] = useState(1);
   const [openAccordion, setOpenAccordion] = useState<string | null>('description');
+  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
 
   // Scroll to top on mount
   useEffect(() => {
@@ -55,12 +58,38 @@ const ShoePage = () => {
       alert('Please select a size');
       return;
     }
-    // TODO: Add to cart logic
-    alert(`Added ${quantity} x ${shoe.name} (Size ${selectedSize}, ${selectedColor}) to cart!`);
+    
+    addToCart(shoe, selectedSize, selectedColor, quantity);
+    setShowSuccessMessage(true);
+    
+    // Hide success message after 3 seconds
+    setTimeout(() => {
+      setShowSuccessMessage(false);
+    }, 3000);
   };
 
   return (
     <div className="min-h-screen">
+      {/* Success Toast */}
+      <AnimatePresence>
+        {showSuccessMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: -50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -50 }}
+            className="fixed top-20 right-4 z-50 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3"
+          >
+            <Check className="w-5 h-5" />
+            <div>
+              <p className="font-semibold">Added to cart!</p>
+              <p className="text-sm text-green-100">
+                {quantity} x {shoe.name}
+              </p>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Back Button */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
         <Link
@@ -241,7 +270,7 @@ const ShoePage = () => {
         </div>
 
         {/* Product Details Accordion */}
-        <div className="mt-16 max-w-4xl">
+        <div className="mt-16 max-w-7xl mx-auto">
           <h2 className="text-2xl font-display font-bold mb-6">Product Details</h2>
           <div className="space-y-4">
             {/* Description */}

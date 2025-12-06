@@ -1,9 +1,12 @@
 import { Link } from 'react-router-dom';
 import { ShoppingCart, Menu, X } from 'lucide-react';
 import { useState } from 'react';
+import { useCart } from '../../context/CartContext';
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { getCartItemCount } = useCart();
+  const cartItemCount = getCartItemCount();
 
   const categories = [
     { name: 'Sneakers', path: '/category/sneakers' },
@@ -53,15 +56,18 @@ const Navigation = () => {
             >
               Contact
             </Link>
-            <button 
+            <Link
+              to="/cart"
               className="relative p-2 rounded-full hover:bg-gray-100 transition-colors"
               aria-label="Shopping cart"
             >
               <ShoppingCart className="w-5 h-5" />
-              <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                0
-              </span>
-            </button>
+              {cartItemCount > 0 && (
+                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+                  {cartItemCount}
+                </span>
+              )}
+            </Link>
 
             {/* Mobile Menu Button */}
             <button

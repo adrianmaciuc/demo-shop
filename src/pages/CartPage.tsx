@@ -1,10 +1,11 @@
-import { Link } from 'react-router-dom';
-import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft } from 'lucide-react';
-import { useCart } from '../context/CartContext';
-import { useEffect } from 'react';
+import { Link } from "react-router-dom";
+import { Minus, Plus, Trash2, ShoppingBag, ArrowLeft } from "lucide-react";
+import { useCart } from "../context/CartContext";
+import { useEffect } from "react";
 
 const CartPage = () => {
-  const { cartItems, updateQuantity, removeFromCart, getCartTotal, clearCart } = useCart();
+  const { cartItems, updateQuantity, removeFromCart, getCartTotal, clearCart } =
+    useCart();
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -17,19 +18,42 @@ const CartPage = () => {
 
   if (cartItems.length === 0) {
     return (
-      <div className="min-h-screen flex items-center justify-center px-4" data-testid="empty-cart-container">
+      <div
+        className="min-h-screen flex items-center justify-center px-4"
+        data-testid="empty-cart-container"
+      >
         <div className="text-center max-w-md" data-testid="empty-cart-content">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gray-100 rounded-full mb-6" data-testid="empty-cart-icon-wrapper">
-            <ShoppingBag className="w-10 h-10 text-gray-400" data-testid="empty-cart-icon" />
+          <div
+            className="inline-flex items-center justify-center w-20 h-20 bg-gray-100 rounded-full mb-6"
+            data-testid="empty-cart-icon-wrapper"
+          >
+            <ShoppingBag
+              className="w-10 h-10 text-gray-400"
+              data-testid="empty-cart-icon"
+            />
           </div>
-          <h2 className="text-3xl font-display font-bold mb-4" style={{ color: 'var(--color-primary)' }} data-testid="empty-cart-heading">
+          <h2
+            className="text-3xl font-display font-bold mb-4"
+            style={{ color: "var(--color-primary)" }}
+            data-testid="empty-cart-heading"
+          >
             Your cart is empty
           </h2>
-          <p className="text-gray-600 mb-8" data-testid="empty-cart-description">
+          <p
+            className="text-gray-600 mb-8"
+            data-testid="empty-cart-description"
+          >
             Looks like you haven't added any items to your cart yet.
           </p>
-          <Link to="/" className="btn-accent inline-flex items-center gap-2" data-testid="empty-cart-continue-link">
-            <ArrowLeft className="w-5 h-5" data-testid="empty-cart-arrow-icon" />
+          <Link
+            to="/"
+            className="btn-accent inline-flex items-center gap-2"
+            data-testid="empty-cart-continue-link"
+          >
+            <ArrowLeft
+              className="w-5 h-5"
+              data-testid="empty-cart-arrow-icon"
+            />
             Continue Shopping
           </Link>
         </div>
@@ -51,7 +75,11 @@ const CartPage = () => {
             <span className="font-medium">Continue Shopping</span>
           </Link>
           <div className="flex items-center justify-between">
-            <h1 className="text-4xl font-display font-bold" style={{ color: 'var(--color-primary)' }} data-testid="cart-title">
+            <h1
+              className="text-4xl font-display font-bold"
+              style={{ color: "var(--color-primary)" }}
+              data-testid="cart-title"
+            >
               Shopping Cart
             </h1>
             <button
@@ -62,12 +90,17 @@ const CartPage = () => {
               Clear Cart
             </button>
           </div>
-          <p className="text-gray-600 mt-2" data-testid="cart-item-count">{cartItems.length} items in your cart</p>
+          <p className="text-gray-600 mt-2" data-testid="cart-item-count">
+            {cartItems.length} items in your cart
+          </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Cart Items */}
-          <div className="lg:col-span-2 space-y-4" data-testid="cart-items-list">
+          <div
+            className="lg:col-span-2 space-y-4"
+            data-testid="cart-items-list"
+          >
             {cartItems.map((item) => (
               <div
                 key={`${item.shoe.id}-${item.size}-${item.color}`}
@@ -89,36 +122,76 @@ const CartPage = () => {
                 </Link>
 
                 {/* Details */}
-                <div className="flex-1 min-w-0" data-testid={`cart-item-details-${item.shoe.id}`}>
-                  <Link to={`/shoe/${item.shoe.id}`} data-testid={`cart-item-name-link-${item.shoe.id}`}>
-                    <p className="text-sm font-medium mb-1" style={{ color: 'var(--color-accent)' }} data-testid={`cart-item-brand-${item.shoe.id}`}>
+                <div
+                  className="flex-1 min-w-0"
+                  data-testid={`cart-item-details-${item.shoe.id}`}
+                >
+                  <Link
+                    to={`/shoe/${item.shoe.id}`}
+                    data-testid={`cart-item-name-link-${item.shoe.id}`}
+                  >
+                    <p
+                      className="text-sm font-medium mb-1"
+                      style={{ color: "var(--color-accent)" }}
+                      data-testid={`cart-item-brand-${item.shoe.id}`}
+                    >
                       {item.shoe.brand}
                     </p>
-                    <h3 className="text-xl font-display font-semibold mb-2 hover:text-gray-600 transition-colors" data-testid={`cart-item-name-${item.shoe.id}`}>
+                    <h3
+                      className="text-xl font-display font-semibold mb-2 hover:text-gray-600 transition-colors"
+                      data-testid={`cart-item-name-${item.shoe.id}`}
+                    >
                       {item.shoe.name}
                     </h3>
                   </Link>
-                  <div className="flex flex-wrap gap-4 text-sm text-gray-600 mb-4" data-testid={`cart-item-specs-${item.shoe.id}`}>
-                    <span data-testid={`cart-item-color-${item.shoe.id}`}>Color: <span className="font-medium">{item.color}</span></span>
-                    <span data-testid={`cart-item-size-${item.shoe.id}`}>Size: <span className="font-medium">US {item.size}</span></span>
+                  <div
+                    className="flex flex-wrap gap-4 text-sm text-gray-600 mb-4"
+                    data-testid={`cart-item-specs-${item.shoe.id}`}
+                  >
+                    <span data-testid={`cart-item-color-${item.shoe.id}`}>
+                      Color: <span className="font-medium">{item.color}</span>
+                    </span>
+                    <span data-testid={`cart-item-size-${item.shoe.id}`}>
+                      Size: <span className="font-medium">US {item.size}</span>
+                    </span>
                   </div>
 
                   {/* Quantity and Price */}
                   <div className="flex items-center justify-between">
-                    <div className="inline-flex items-center border-2 border-gray-300 rounded-lg" data-testid={`cart-item-quantity-container-${item.shoe.id}`}>
+                    <div
+                      className="inline-flex items-center border-2 border-gray-300 rounded-lg"
+                      data-testid={`cart-item-quantity-container-${item.shoe.id}`}
+                    >
                       <button
-                        onClick={() => updateQuantity(item.shoe.id, item.size, item.color, item.quantity - 1)}
+                        onClick={() =>
+                          updateQuantity(
+                            item.shoe.id,
+                            item.size,
+                            item.color,
+                            item.quantity - 1
+                          )
+                        }
                         className="p-2 hover:bg-gray-50 transition-colors"
                         aria-label="Decrease quantity"
                         data-testid={`cart-item-quantity-decrease-${item.shoe.id}`}
                       >
                         <Minus className="w-4 h-4" />
                       </button>
-                      <span className="px-4 py-2 font-semibold min-w-[50px] text-center" data-testid={`cart-item-quantity-value-${item.shoe.id}`}>
+                      <span
+                        className="px-4 py-2 font-semibold min-w-[50px] text-center"
+                        data-testid={`cart-item-quantity-value-${item.shoe.id}`}
+                      >
                         {item.quantity}
                       </span>
                       <button
-                        onClick={() => updateQuantity(item.shoe.id, item.size, item.color, item.quantity + 1)}
+                        onClick={() =>
+                          updateQuantity(
+                            item.shoe.id,
+                            item.size,
+                            item.color,
+                            item.quantity + 1
+                          )
+                        }
                         className="p-2 hover:bg-gray-50 transition-colors"
                         aria-label="Increase quantity"
                         data-testid={`cart-item-quantity-increase-${item.shoe.id}`}
@@ -127,11 +200,21 @@ const CartPage = () => {
                       </button>
                     </div>
 
-                    <div className="text-right" data-testid={`cart-item-price-container-${item.shoe.id}`}>
-                      <p className="text-2xl font-bold" style={{ color: 'var(--color-primary)' }} data-testid={`cart-item-total-price-${item.shoe.id}`}>
+                    <div
+                      className="text-right"
+                      data-testid={`cart-item-price-container-${item.shoe.id}`}
+                    >
+                      <p
+                        className="text-2xl font-bold"
+                        style={{ color: "var(--color-primary)" }}
+                        data-testid={`cart-item-total-price-${item.shoe.id}`}
+                      >
                         ${(item.shoe.price * item.quantity).toFixed(2)}
                       </p>
-                      <p className="text-sm text-gray-500" data-testid={`cart-item-unit-price-${item.shoe.id}`}>
+                      <p
+                        className="text-sm text-gray-500"
+                        data-testid={`cart-item-unit-price-${item.shoe.id}`}
+                      >
                         ${item.shoe.price.toFixed(2)} each
                       </p>
                     </div>
@@ -140,7 +223,9 @@ const CartPage = () => {
 
                 {/* Remove Button */}
                 <button
-                  onClick={() => removeFromCart(item.shoe.id, item.size, item.color)}
+                  onClick={() =>
+                    removeFromCart(item.shoe.id, item.size, item.color)
+                  }
                   className="flex-shrink-0 self-start p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-colors"
                   aria-label="Remove item"
                   data-testid={`cart-item-remove-${item.shoe.id}`}
@@ -153,48 +238,103 @@ const CartPage = () => {
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-xl shadow-sm p-6 sticky top-20" data-testid="cart-order-summary">
-              <h2 className="text-2xl font-display font-bold mb-6" data-testid="order-summary-heading">Order Summary</h2>
+            <div
+              className="bg-white rounded-xl shadow-sm p-6 sticky top-20"
+              data-testid="cart-order-summary"
+            >
+              <h2
+                className="text-2xl font-display font-bold mb-6"
+                data-testid="order-summary-heading"
+              >
+                Order Summary
+              </h2>
 
-              <div className="space-y-4 mb-6" data-testid="order-summary-details">
-                <div className="flex justify-between text-gray-600" data-testid="order-subtotal">
+              <div
+                className="space-y-4 mb-6"
+                data-testid="order-summary-details"
+              >
+                <div
+                  className="flex justify-between text-gray-600"
+                  data-testid="order-subtotal"
+                >
                   <span>Subtotal</span>
-                  <span className="font-semibold" data-testid="order-subtotal-amount">${subtotal.toFixed(2)}</span>
+                  <span
+                    className="font-semibold"
+                    data-testid="order-subtotal-amount"
+                  >
+                    ${subtotal.toFixed(2)}
+                  </span>
                 </div>
-                <div className="flex justify-between text-gray-600" data-testid="order-shipping">
+                <div
+                  className="flex justify-between text-gray-600"
+                  data-testid="order-shipping"
+                >
                   <span>Shipping</span>
-                  <span className="font-semibold" data-testid="order-shipping-amount">
+                  <span
+                    className="font-semibold"
+                    data-testid="order-shipping-amount"
+                  >
                     {shipping === 0 ? (
-                      <span className="text-green-600" data-testid="order-shipping-free">FREE</span>
+                      <span
+                        className="text-green-600"
+                        data-testid="order-shipping-free"
+                      >
+                        FREE
+                      </span>
                     ) : (
                       `$${shipping.toFixed(2)}`
                     )}
                   </span>
                 </div>
-                <div className="flex justify-between text-gray-600" data-testid="order-tax">
+                <div
+                  className="flex justify-between text-gray-600"
+                  data-testid="order-tax"
+                >
                   <span>Tax (8%)</span>
-                  <span className="font-semibold" data-testid="order-tax-amount">${tax.toFixed(2)}</span>
+                  <span
+                    className="font-semibold"
+                    data-testid="order-tax-amount"
+                  >
+                    ${tax.toFixed(2)}
+                  </span>
                 </div>
 
                 {subtotal < 100 && subtotal > 0 && (
-                  <div className="bg-orange-50 border border-orange-200 rounded-lg p-3" data-testid="order-free-shipping-alert">
+                  <div
+                    className="bg-orange-50 border border-orange-200 rounded-lg p-3"
+                    data-testid="order-free-shipping-alert"
+                  >
                     <p className="text-sm text-orange-700">
-                      Add <span className="font-semibold">${(100 - subtotal).toFixed(2)}</span> more for free shipping!
+                      Add{" "}
+                      <span className="font-semibold">
+                        ${(100 - subtotal).toFixed(2)}
+                      </span>{" "}
+                      more for free shipping!
                     </p>
                   </div>
                 )}
 
-                <div className="border-t border-gray-200 pt-4" data-testid="order-total-container">
+                <div
+                  className="border-t border-gray-200 pt-4"
+                  data-testid="order-total-container"
+                >
                   <div className="flex justify-between items-center">
                     <span className="text-lg font-semibold">Total</span>
-                    <span className="text-3xl font-bold" style={{ color: 'var(--color-primary)' }} data-testid="order-total-amount">
+                    <span
+                      className="text-3xl font-bold"
+                      style={{ color: "var(--color-primary)" }}
+                      data-testid="order-total-amount"
+                    >
                       ${total.toFixed(2)}
                     </span>
                   </div>
                 </div>
               </div>
 
-              <button className="w-full btn-accent text-lg mb-4" data-testid="cart-checkout-button">
+              <button
+                className="w-full btn-accent text-lg mb-4"
+                data-testid="cart-checkout-button"
+              >
                 Proceed to Checkout
               </button>
 
@@ -207,22 +347,58 @@ const CartPage = () => {
               </Link>
 
               {/* Trust Badges */}
-              <div className="mt-8 pt-6 border-t border-gray-200 space-y-3" data-testid="cart-trust-badges">
-                <div className="flex items-start gap-3 text-sm text-gray-600" data-testid="trust-badge-security">
-                  <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              <div
+                className="mt-8 pt-6 border-t border-gray-200 space-y-3"
+                data-testid="cart-trust-badges"
+              >
+                <div
+                  className="flex items-start gap-3 text-sm text-gray-600"
+                  data-testid="trust-badge-security"
+                >
+                  <svg
+                    className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   <span>Secure checkout with SSL encryption</span>
                 </div>
-                <div className="flex items-start gap-3 text-sm text-gray-600" data-testid="trust-badge-returns">
-                  <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                <div
+                  className="flex items-start gap-3 text-sm text-gray-600"
+                  data-testid="trust-badge-returns"
+                >
+                  <svg
+                    className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   <span>30-day easy returns</span>
                 </div>
-                <div className="flex items-start gap-3 text-sm text-gray-600" data-testid="trust-badge-free-shipping">
-                  <svg className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                <div
+                  className="flex items-start gap-3 text-sm text-gray-600"
+                  data-testid="trust-badge-free-shipping"
+                >
+                  <svg
+                    className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5"
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+                      clipRule="evenodd"
+                    />
                   </svg>
                   <span>Free shipping on orders over $100</span>
                 </div>

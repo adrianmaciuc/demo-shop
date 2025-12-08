@@ -36,9 +36,15 @@ const ShoePage = () => {
 
   if (!shoe) {
     return (
-      <div className="min-h-screen flex items-center justify-center" data-testid="shoe-not-found">
+      <div
+        className="min-h-screen flex items-center justify-center"
+        data-testid="shoe-not-found"
+      >
         <div className="text-center" data-testid="shoe-not-found-content">
-          <h2 className="text-2xl font-display font-bold mb-4" data-testid="shoe-not-found-heading">
+          <h2
+            className="text-2xl font-display font-bold mb-4"
+            data-testid="shoe-not-found-heading"
+          >
             Product Not Found
           </h2>
           <Link
@@ -99,8 +105,16 @@ const ShoePage = () => {
           >
             <Check className="w-5 h-5" data-testid="shoe-success-toast-icon" />
             <div data-testid="shoe-success-toast-content">
-              <p className="font-semibold" data-testid="shoe-success-toast-title">Added to cart!</p>
-              <p className="text-sm text-green-100" data-testid="shoe-success-toast-description">
+              <p
+                className="font-semibold"
+                data-testid="shoe-success-toast-title"
+              >
+                Added to cart!
+              </p>
+              <p
+                className="text-sm text-green-100"
+                data-testid="shoe-success-toast-description"
+              >
                 {quantity} x {shoe.name}
               </p>
             </div>
@@ -109,7 +123,10 @@ const ShoePage = () => {
       </AnimatePresence>
 
       {/* Breadcrumb Navigation */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4" data-testid="shoe-breadcrumb-container">
+      <div
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4"
+        data-testid="shoe-breadcrumb-container"
+      >
         <Breadcrumb
           items={[
             {
@@ -122,8 +139,14 @@ const ShoePage = () => {
         />
       </div>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8" data-testid="shoe-main-content">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12" data-testid="shoe-content-grid">
+      <div
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8"
+        data-testid="shoe-main-content"
+      >
+        <div
+          className="grid grid-cols-1 lg:grid-cols-2 gap-12"
+          data-testid="shoe-content-grid"
+        >
           {/* Image Gallery */}
           <div className="space-y-4" data-testid="shoe-gallery">
             {/* Main Image */}
@@ -142,7 +165,10 @@ const ShoePage = () => {
                 data-testid={`shoe-main-image-${selectedImage}`}
               />
               {shoe.featured && (
-                <div className="absolute top-4 right-4 bg-yellow-400 text-gray-900 px-4 py-2 rounded-full text-sm font-semibold" data-testid="shoe-featured-badge">
+                <div
+                  className="absolute top-4 right-4 bg-yellow-400 text-gray-900 px-4 py-2 rounded-full text-sm font-semibold"
+                  data-testid="shoe-featured-badge"
+                >
                   Featured
                 </div>
               )}
@@ -150,7 +176,10 @@ const ShoePage = () => {
 
             {/* Thumbnail Gallery */}
             {shoe.images.length > 1 && (
-              <div className="grid grid-cols-4 gap-4" data-testid="shoe-thumbnail-gallery">
+              <div
+                className="grid grid-cols-4 gap-4"
+                data-testid="shoe-thumbnail-gallery"
+              >
                 {shoe.images.map((image, index) => (
                   <button
                     key={index}
@@ -192,13 +221,19 @@ const ShoePage = () => {
               >
                 {shoe.name}
               </h1>
-              <p className="text-gray-600 text-lg leading-relaxed" data-testid="shoe-description">
+              <p
+                className="text-gray-600 text-lg leading-relaxed"
+                data-testid="shoe-description"
+              >
                 {shoe.description}
               </p>
             </div>
 
             {/* Price */}
-            <div className="py-4 border-y border-gray-200" data-testid="shoe-price-section">
+            <div
+              className="py-4 border-y border-gray-200"
+              data-testid="shoe-price-section"
+            >
               <p
                 className="text-4xl font-bold"
                 style={{ color: "var(--color-primary)" }}
@@ -206,20 +241,32 @@ const ShoePage = () => {
               >
                 ${shoe.price}
               </p>
-              <p className="text-sm text-gray-500 mt-1" data-testid="shoe-shipping-info">
+              <p
+                className="text-sm text-gray-500 mt-1"
+                data-testid="shoe-shipping-info"
+              >
                 Free shipping on orders over $100
               </p>
             </div>
 
             {/* Color Selection */}
             <div data-testid="shoe-color-selector">
-              <label className="block text-sm font-semibold mb-3" data-testid="shoe-color-label">
+              <label
+                className="block text-sm font-semibold mb-3"
+                data-testid="shoe-color-label"
+              >
                 Color:{" "}
-                <span className="font-normal text-gray-600" data-testid="shoe-color-selected">
+                <span
+                  className="font-normal text-gray-600"
+                  data-testid="shoe-color-selected"
+                >
                   {selectedColor}
                 </span>
               </label>
-              <div className="flex flex-wrap gap-3" data-testid="shoe-color-options">
+              <div
+                className="flex flex-wrap gap-3"
+                data-testid="shoe-color-options"
+              >
                 {shoe.colors.map((color) => (
                   <button
                     key={color}
@@ -239,15 +286,24 @@ const ShoePage = () => {
 
             {/* Size Selection */}
             <div data-testid="shoe-size-selector">
-              <label className="block text-sm font-semibold mb-3" data-testid="shoe-size-label">
+              <label
+                className="block text-sm font-semibold mb-3"
+                data-testid="shoe-size-label"
+              >
                 Size:{" "}
                 {selectedSize && (
-                  <span className="font-normal text-gray-600" data-testid="shoe-size-selected">
+                  <span
+                    className="font-normal text-gray-600"
+                    data-testid="shoe-size-selected"
+                  >
                     US {selectedSize}
                   </span>
                 )}
               </label>
-              <div className="grid grid-cols-5 gap-3" data-testid="shoe-size-options">
+              <div
+                className="grid grid-cols-5 gap-3"
+                data-testid="shoe-size-options"
+              >
                 {shoe.sizes.map((size) => (
                   <button
                     key={size}
@@ -264,7 +320,10 @@ const ShoePage = () => {
                 ))}
               </div>
               {!selectedSize && (
-                <p className="text-sm text-red-500 mt-2" data-testid="shoe-size-error">
+                <p
+                  className="text-sm text-red-500 mt-2"
+                  data-testid="shoe-size-error"
+                >
                   Please select a size
                 </p>
               )}
@@ -272,10 +331,16 @@ const ShoePage = () => {
 
             {/* Quantity */}
             <div data-testid="shoe-quantity-selector">
-              <label className="block text-sm font-semibold mb-3" data-testid="shoe-quantity-label">
+              <label
+                className="block text-sm font-semibold mb-3"
+                data-testid="shoe-quantity-label"
+              >
                 Quantity
               </label>
-              <div className="inline-flex items-center border-2 border-gray-300 rounded-lg" data-testid="shoe-quantity-controls">
+              <div
+                className="inline-flex items-center border-2 border-gray-300 rounded-lg"
+                data-testid="shoe-quantity-controls"
+              >
                 <button
                   onClick={decrementQuantity}
                   className="p-3 hover:bg-gray-50 transition-colors"
@@ -284,7 +349,10 @@ const ShoePage = () => {
                 >
                   <Minus className="w-5 h-5" />
                 </button>
-                <span className="px-6 py-3 font-semibold min-w-[60px] text-center" data-testid="shoe-quantity-value">
+                <span
+                  className="px-6 py-3 font-semibold min-w-[60px] text-center"
+                  data-testid="shoe-quantity-value"
+                >
                   {quantity}
                 </span>
                 <button
@@ -308,12 +376,21 @@ const ShoePage = () => {
                 <ShoppingCart className="w-5 h-5" />
                 Add to Cart
               </button>
-              <div className="grid grid-cols-2 gap-3" data-testid="shoe-secondary-buttons">
-                <button className="px-6 py-3 border-2 border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-all flex items-center justify-center gap-2" data-testid="shoe-wishlist-button">
+              <div
+                className="grid grid-cols-2 gap-3"
+                data-testid="shoe-secondary-buttons"
+              >
+                <button
+                  className="px-6 py-3 border-2 border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
+                  data-testid="shoe-wishlist-button"
+                >
                   <Heart className="w-5 h-5" />
                   Wishlist
                 </button>
-                <button className="px-6 py-3 border-2 border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-all flex items-center justify-center gap-2" data-testid="shoe-share-button">
+                <button
+                  className="px-6 py-3 border-2 border-gray-300 rounded-lg font-medium hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
+                  data-testid="shoe-share-button"
+                >
                   <Share2 className="w-5 h-5" />
                   Share
                 </button>
@@ -321,12 +398,21 @@ const ShoePage = () => {
             </div>
 
             {/* Stock & Delivery Info */}
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 space-y-2" data-testid="shoe-stock-info">
-              <div className="flex items-center gap-2 text-green-700" data-testid="shoe-in-stock">
+            <div
+              className="bg-green-50 border border-green-200 rounded-lg p-4 space-y-2"
+              data-testid="shoe-stock-info"
+            >
+              <div
+                className="flex items-center gap-2 text-green-700"
+                data-testid="shoe-in-stock"
+              >
                 <Check className="w-5 h-5" />
                 <span className="font-semibold">In Stock</span>
               </div>
-              <p className="text-sm text-gray-600" data-testid="shoe-delivery-info">
+              <p
+                className="text-sm text-gray-600"
+                data-testid="shoe-delivery-info"
+              >
                 Order within{" "}
                 <span className="font-semibold">2 hours 30 minutes</span> for
                 delivery by tomorrow
@@ -336,13 +422,22 @@ const ShoePage = () => {
         </div>
 
         {/* Product Details Accordion */}
-        <div className="mt-16 max-w-7xl mx-auto" data-testid="shoe-details-section">
-          <h2 className="text-2xl font-display font-bold mb-6" data-testid="shoe-details-heading">
+        <div
+          className="mt-16 max-w-7xl mx-auto"
+          data-testid="shoe-details-section"
+        >
+          <h2
+            className="text-2xl font-display font-bold mb-6"
+            data-testid="shoe-details-heading"
+          >
             Product Details
           </h2>
           <div className="space-y-4" data-testid="shoe-details-accordion">
             {/* Description */}
-            <div className="bg-white rounded-xl shadow-sm overflow-hidden" data-testid="shoe-accordion-description">
+            <div
+              className="bg-white rounded-xl shadow-sm overflow-hidden"
+              data-testid="shoe-accordion-description"
+            >
               <button
                 onClick={() => toggleAccordion("description")}
                 className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
@@ -366,11 +461,26 @@ const ShoePage = () => {
                     className="overflow-hidden"
                     data-testid="shoe-accordion-description-content"
                   >
-                    <div className="px-6 pb-6 text-gray-600" data-testid="shoe-accordion-description-body">
-                      <p className="mb-4" data-testid="shoe-accordion-description-text">{shoe.description}</p>
-                      <ul className="space-y-2" data-testid="shoe-accordion-description-features">
+                    <div
+                      className="px-6 pb-6 text-gray-600"
+                      data-testid="shoe-accordion-description-body"
+                    >
+                      <p
+                        className="mb-4"
+                        data-testid="shoe-accordion-description-text"
+                      >
+                        {shoe.description}
+                      </p>
+                      <ul
+                        className="space-y-2"
+                        data-testid="shoe-accordion-description-features"
+                      >
                         {shoe.features.map((feature, index) => (
-                          <li key={index} className="flex items-start gap-2" data-testid={`shoe-feature-${index}`}>
+                          <li
+                            key={index}
+                            className="flex items-start gap-2"
+                            data-testid={`shoe-feature-${index}`}
+                          >
                             <Check className="w-5 h-5 text-green-500 flex-shrink-0 mt-0.5" />
                             <span>{feature}</span>
                           </li>
@@ -383,7 +493,10 @@ const ShoePage = () => {
             </div>
 
             {/* Shipping & Returns */}
-            <div className="bg-white rounded-xl shadow-sm overflow-hidden" data-testid="shoe-accordion-shipping">
+            <div
+              className="bg-white rounded-xl shadow-sm overflow-hidden"
+              data-testid="shoe-accordion-shipping"
+            >
               <button
                 onClick={() => toggleAccordion("shipping")}
                 className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
@@ -409,9 +522,15 @@ const ShoePage = () => {
                     className="overflow-hidden"
                     data-testid="shoe-accordion-shipping-content"
                   >
-                    <div className="px-6 pb-6 text-gray-600 space-y-4" data-testid="shoe-accordion-shipping-body">
+                    <div
+                      className="px-6 pb-6 text-gray-600 space-y-4"
+                      data-testid="shoe-accordion-shipping-body"
+                    >
                       <div data-testid="shoe-shipping-section">
-                        <h4 className="font-semibold text-gray-900 mb-2" data-testid="shoe-shipping-heading">
+                        <h4
+                          className="font-semibold text-gray-900 mb-2"
+                          data-testid="shoe-shipping-heading"
+                        >
                           Free Shipping
                         </h4>
                         <p data-testid="shoe-shipping-text">
@@ -420,7 +539,10 @@ const ShoePage = () => {
                         </p>
                       </div>
                       <div data-testid="shoe-returns-section">
-                        <h4 className="font-semibold text-gray-900 mb-2" data-testid="shoe-returns-heading">
+                        <h4
+                          className="font-semibold text-gray-900 mb-2"
+                          data-testid="shoe-returns-heading"
+                        >
                           Easy Returns
                         </h4>
                         <p data-testid="shoe-returns-text">
@@ -429,7 +551,10 @@ const ShoePage = () => {
                         </p>
                       </div>
                       <div data-testid="shoe-delivery-section">
-                        <h4 className="font-semibold text-gray-900 mb-2" data-testid="shoe-delivery-time-heading">
+                        <h4
+                          className="font-semibold text-gray-900 mb-2"
+                          data-testid="shoe-delivery-time-heading"
+                        >
                           Delivery Time
                         </h4>
                         <p data-testid="shoe-delivery-time-text">
@@ -444,7 +569,10 @@ const ShoePage = () => {
             </div>
 
             {/* Care Instructions */}
-            <div className="bg-white rounded-xl shadow-sm overflow-hidden" data-testid="shoe-accordion-care">
+            <div
+              className="bg-white rounded-xl shadow-sm overflow-hidden"
+              data-testid="shoe-accordion-care"
+            >
               <button
                 onClick={() => toggleAccordion("care")}
                 className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
@@ -468,13 +596,29 @@ const ShoePage = () => {
                     className="overflow-hidden"
                     data-testid="shoe-accordion-care-content"
                   >
-                    <div className="px-6 pb-6 text-gray-600" data-testid="shoe-accordion-care-body">
-                      <ul className="space-y-2" data-testid="shoe-care-instructions">
-                        <li data-testid="shoe-care-step-1">• Clean with a soft, damp cloth</li>
-                        <li data-testid="shoe-care-step-2">• Avoid harsh chemicals and solvents</li>
-                        <li data-testid="shoe-care-step-3">• Air dry away from direct heat</li>
-                        <li data-testid="shoe-care-step-4">• Store in a cool, dry place</li>
-                        <li data-testid="shoe-care-step-5">• Use shoe trees to maintain shape</li>
+                    <div
+                      className="px-6 pb-6 text-gray-600"
+                      data-testid="shoe-accordion-care-body"
+                    >
+                      <ul
+                        className="space-y-2"
+                        data-testid="shoe-care-instructions"
+                      >
+                        <li data-testid="shoe-care-step-1">
+                          • Clean with a soft, damp cloth
+                        </li>
+                        <li data-testid="shoe-care-step-2">
+                          • Avoid harsh chemicals and solvents
+                        </li>
+                        <li data-testid="shoe-care-step-3">
+                          • Air dry away from direct heat
+                        </li>
+                        <li data-testid="shoe-care-step-4">
+                          • Store in a cool, dry place
+                        </li>
+                        <li data-testid="shoe-care-step-5">
+                          • Use shoe trees to maintain shape
+                        </li>
                       </ul>
                     </div>
                   </motion.div>
@@ -487,10 +631,16 @@ const ShoePage = () => {
         {/* Recommended Products */}
         {recommendedShoes.length > 0 && (
           <div className="mt-20" data-testid="shoe-recommendations-section">
-            <h2 className="text-3xl font-display font-bold mb-8" data-testid="shoe-recommendations-heading">
+            <h2
+              className="text-3xl font-display font-bold mb-8"
+              data-testid="shoe-recommendations-heading"
+            >
               You Might Also Like
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" data-testid="shoe-recommendations-grid">
+            <div
+              className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
+              data-testid="shoe-recommendations-grid"
+            >
               {recommendedShoes.map((recommendedShoe, index) => (
                 <ProductCard
                   key={recommendedShoe.id}

@@ -25,10 +25,22 @@ const Breadcrumb = ({ items }: BreadcrumbProps) => {
         Home
       </Link>
       {items.map((item, index) => (
-        <div key={`${item.path}-${index}`} className="flex items-center gap-2" data-testid={`breadcrumb-item-${index}`}>
-          <ChevronRight className="w-4 h-4 text-gray-400" data-testid={`breadcrumb-separator-${index}`} />
+        <div
+          key={`${item.path}-${index}`}
+          className="flex items-center gap-2"
+          data-testid={`breadcrumb-item-${index}`}
+        >
+          <ChevronRight
+            className="w-4 h-4 text-gray-400"
+            data-testid={`breadcrumb-separator-${index}`}
+          />
           {index === items.length - 1 ? (
-            <span className="text-gray-900 font-semibold" data-testid={`breadcrumb-current-${item.label.toLowerCase()}`}>{item.label}</span>
+            <span
+              className="text-gray-900 font-semibold"
+              data-testid={`breadcrumb-current-${item.label.toLowerCase()}`}
+            >
+              {item.label}
+            </span>
           ) : (
             <Link
               to={item.path}

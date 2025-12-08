@@ -137,12 +137,24 @@ const CategoryPage = () => {
         }}
         data-testid="category-header-banner"
       >
-        <div className="absolute inset-0 bg-black/50" data-testid="category-header-overlay" />
-        <div className="relative z-10 text-center px-4" data-testid="category-header-content">
-          <h1 className="text-5xl font-display font-bold text-white mb-4 capitalize" data-testid="category-header-title">
+        <div
+          className="absolute inset-0 bg-black/50"
+          data-testid="category-header-overlay"
+        />
+        <div
+          className="relative z-10 text-center px-4"
+          data-testid="category-header-content"
+        >
+          <h1
+            className="text-5xl font-display font-bold text-white mb-4 capitalize"
+            data-testid="category-header-title"
+          >
             {categoryName}
           </h1>
-          <p className="text-xl text-gray-200" data-testid="category-header-description">
+          <p
+            className="text-xl text-gray-200"
+            data-testid="category-header-description"
+          >
             {categoryInfo?.description || "Explore our collection"}
           </p>
         </div>
@@ -159,7 +171,10 @@ const CategoryPage = () => {
           />
         )}
         {/* Controls Bar */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8" data-testid="category-controls-bar">
+        <div
+          className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8"
+          data-testid="category-controls-bar"
+        >
           <div className="flex items-center gap-4">
             <button
               onClick={() => setShowFilters(!showFilters)}
@@ -169,20 +184,32 @@ const CategoryPage = () => {
               <SlidersHorizontal className="w-5 h-5" />
               <span className="font-medium">Filters</span>
               {hasActiveFilters && (
-                <span className="bg-orange-500 text-white text-xs px-2 py-0.5 rounded-full" data-testid="category-filter-active-badge">
+                <span
+                  className="bg-orange-500 text-white text-xs px-2 py-0.5 rounded-full"
+                  data-testid="category-filter-active-badge"
+                >
                   Active
                 </span>
               )}
             </button>
 
             <p className="text-gray-600" data-testid="category-product-count">
-              <span className="font-semibold" data-testid="category-product-count-number">{filteredShoes.length}</span>{" "}
+              <span
+                className="font-semibold"
+                data-testid="category-product-count-number"
+              >
+                {filteredShoes.length}
+              </span>{" "}
               products
             </p>
           </div>
 
           <div className="flex items-center gap-2">
-            <label htmlFor="sort" className="text-sm font-medium text-gray-700" data-testid="category-sort-label">
+            <label
+              htmlFor="sort"
+              className="text-sm font-medium text-gray-700"
+              data-testid="category-sort-label"
+            >
               Sort by:
             </label>
             <select
@@ -209,9 +236,17 @@ const CategoryPage = () => {
             }`}
             data-testid="category-filters-sidebar"
           >
-            <div className="bg-white p-6 rounded-xl shadow-sm sticky top-20" data-testid="category-filters-panel">
+            <div
+              className="bg-white p-6 rounded-xl shadow-sm sticky top-20"
+              data-testid="category-filters-panel"
+            >
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-display font-bold" data-testid="category-filters-heading">Filters</h3>
+                <h3
+                  className="text-lg font-display font-bold"
+                  data-testid="category-filters-heading"
+                >
+                  Filters
+                </h3>
                 {hasActiveFilters && (
                   <button
                     onClick={clearFilters}
@@ -224,12 +259,21 @@ const CategoryPage = () => {
               </div>
 
               {/* Size Filter */}
-              <div className="mb-6 pb-6 border-b border-gray-200" data-testid="category-filter-size">
-                <h4 className="font-semibold mb-3 flex items-center gap-2" data-testid="category-filter-size-heading">
+              <div
+                className="mb-6 pb-6 border-b border-gray-200"
+                data-testid="category-filter-size"
+              >
+                <h4
+                  className="font-semibold mb-3 flex items-center gap-2"
+                  data-testid="category-filter-size-heading"
+                >
                   <Filter className="w-4 h-4" />
                   Size
                 </h4>
-                <div className="grid grid-cols-4 gap-2" data-testid="category-filter-size-options">
+                <div
+                  className="grid grid-cols-4 gap-2"
+                  data-testid="category-filter-size-options"
+                >
                   {availableSizes.map((size) => (
                     <button
                       key={size}
@@ -248,12 +292,21 @@ const CategoryPage = () => {
               </div>
 
               {/* Color Filter */}
-              <div className="mb-6 pb-6 border-b border-gray-200" data-testid="category-filter-color">
-                <h4 className="font-semibold mb-3 flex items-center gap-2" data-testid="category-filter-color-heading">
+              <div
+                className="mb-6 pb-6 border-b border-gray-200"
+                data-testid="category-filter-color"
+              >
+                <h4
+                  className="font-semibold mb-3 flex items-center gap-2"
+                  data-testid="category-filter-color-heading"
+                >
                   <Filter className="w-4 h-4" />
                   Color
                 </h4>
-                <div className="space-y-2" data-testid="category-filter-color-options">
+                <div
+                  className="space-y-2"
+                  data-testid="category-filter-color-options"
+                >
                   {availableColors.map((color) => (
                     <label
                       key={color}
@@ -275,15 +328,31 @@ const CategoryPage = () => {
 
               {/* Price Filter */}
               <div data-testid="category-filter-price">
-                <h4 className="font-semibold mb-3 flex items-center gap-2" data-testid="category-filter-price-heading">
+                <h4
+                  className="font-semibold mb-3 flex items-center gap-2"
+                  data-testid="category-filter-price-heading"
+                >
                   <Filter className="w-4 h-4" />
                   Price Range
                 </h4>
                 <div className="space-y-4">
-                  <div className="flex items-center gap-2 text-sm" data-testid="category-filter-price-display">
-                    <span className="font-medium" data-testid="category-filter-price-min">${priceRange[0]}</span>
+                  <div
+                    className="flex items-center gap-2 text-sm"
+                    data-testid="category-filter-price-display"
+                  >
+                    <span
+                      className="font-medium"
+                      data-testid="category-filter-price-min"
+                    >
+                      ${priceRange[0]}
+                    </span>
                     <span className="text-gray-400">-</span>
-                    <span className="font-medium" data-testid="category-filter-price-max">${priceRange[1]}</span>
+                    <span
+                      className="font-medium"
+                      data-testid="category-filter-price-max"
+                    >
+                      ${priceRange[1]}
+                    </span>
                   </div>
                   <input
                     type="range"
@@ -297,7 +366,10 @@ const CategoryPage = () => {
                     className="w-full accent-orange-500"
                     data-testid="category-filter-price-slider"
                   />
-                  <div className="flex gap-2" data-testid="category-filter-price-inputs">
+                  <div
+                    className="flex gap-2"
+                    data-testid="category-filter-price-inputs"
+                  >
                     <input
                       type="number"
                       value={priceRange[0]}
@@ -333,7 +405,10 @@ const CategoryPage = () => {
           {/* Products Grid */}
           <div className="flex-1" data-testid="category-products-container">
             {filteredShoes.length > 0 ? (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" data-testid="category-products-grid">
+              <div
+                className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
+                data-testid="category-products-grid"
+              >
                 {filteredShoes.map((shoe, index) => (
                   <ProductCard
                     key={shoe.id}
@@ -345,17 +420,36 @@ const CategoryPage = () => {
                 ))}
               </div>
             ) : (
-              <div className="text-center py-16" data-testid="category-no-products">
-                <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4" data-testid="category-no-products-icon-wrapper">
-                  <X className="w-8 h-8 text-gray-400" data-testid="category-no-products-icon" />
+              <div
+                className="text-center py-16"
+                data-testid="category-no-products"
+              >
+                <div
+                  className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4"
+                  data-testid="category-no-products-icon-wrapper"
+                >
+                  <X
+                    className="w-8 h-8 text-gray-400"
+                    data-testid="category-no-products-icon"
+                  />
                 </div>
-                <h3 className="text-xl font-display font-semibold mb-2" data-testid="category-no-products-heading">
+                <h3
+                  className="text-xl font-display font-semibold mb-2"
+                  data-testid="category-no-products-heading"
+                >
                   No products found
                 </h3>
-                <p className="text-gray-600 mb-6" data-testid="category-no-products-message">
+                <p
+                  className="text-gray-600 mb-6"
+                  data-testid="category-no-products-message"
+                >
                   Try adjusting your filters to see more results
                 </p>
-                <button onClick={clearFilters} className="btn-accent" data-testid="category-clear-filters-retry-button">
+                <button
+                  onClick={clearFilters}
+                  className="btn-accent"
+                  data-testid="category-clear-filters-retry-button"
+                >
                   Clear Filters
                 </button>
               </div>

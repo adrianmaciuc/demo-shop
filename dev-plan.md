@@ -502,6 +502,7 @@ The shop is now fully functional with:
 Added intuitive, hierarchical data-testid attributes to **absolutely every element** across all components and pages for complete test coverage.
 
 **Naming Convention:**
+
 - Format: `{section}-{element}-{identifier}`
 - Examples:
   - `nav-category-sneakers` (navigation category links)
@@ -510,6 +511,7 @@ Added intuitive, hierarchical data-testid attributes to **absolutely every eleme
   - `product-price-{id}` (product prices)
 
 **Coverage Summary:**
+
 - ✅ Navigation component (15+ data-testids)
 - ✅ Breadcrumb component (6+ data-testids)
 - ✅ ProductCard component (12+ data-testids with variants)
@@ -533,6 +535,7 @@ Added intuitive, hierarchical data-testid attributes to **absolutely every eleme
 ### 8.3 Next Steps for Testing
 
 With all data-testids in place:
+
 - [ ] Write component unit tests using `getByTestId()`
 - [ ] Write integration tests for user workflows
 - [ ] Set up Playwright E2E tests

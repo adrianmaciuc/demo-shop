@@ -41,4 +41,13 @@ export default [
       ],
     },
   },
+  {
+    files: ["src/**/*.test.{ts,tsx}", "src/**/*.spec.{ts,tsx}"],
+    languageOptions: {
+      globals: globals.jest,
+    },
+    rules: {
+      "no-undef": "off",
+    },
+  },
 ];

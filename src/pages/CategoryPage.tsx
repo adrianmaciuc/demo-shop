@@ -1,15 +1,21 @@
-import { useParams } from 'react-router-dom';
-import { useState, useMemo, useEffect } from 'react';
-import { Filter, SlidersHorizontal, X } from 'lucide-react';
-import { shoes, categories } from '../data/shoes';
-import type { ShoeCategory } from '../types';
-import ProductCard from '../components/product/ProductCard';
+import { useParams } from "react-router-dom";
+import { useState, useMemo, useEffect } from "react";
+import { Filter, SlidersHorizontal, X } from "lucide-react";
+import { shoes, categories } from "../data/shoes";
+import type { ShoeCategory } from "../types";
+import ProductCard from "../components/product/ProductCard";
+import Breadcrumb from "../components/layout/Breadcrumb";
 
-type SortOption = 'name-asc' | 'name-desc' | 'price-asc' | 'price-desc' | 'newest';
+type SortOption =
+  | "name-asc"
+  | "name-desc"
+  | "price-asc"
+  | "price-desc"
+  | "newest";
 
 const CategoryPage = () => {
   const { categoryName } = useParams<{ categoryName: string }>();
-  const [sortBy, setSortBy] = useState<SortOption>('newest');
+  const [sortBy, setSortBy] = useState<SortOption>("newest");
   const [selectedSizes, setSelectedSizes] = useState<number[]>([]);
   const [selectedColors, setSelectedColors] = useState<string[]>([]);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 300]);
@@ -25,19 +31,23 @@ const CategoryPage = () => {
 
   // Filter shoes by category
   const categoryShoes = shoes.filter(
-    (shoe) => shoe.category === categoryName as ShoeCategory
+    (shoe) => shoe.category === (categoryName as ShoeCategory)
   );
 
   // Get all available sizes and colors for this category
   const availableSizes = useMemo(() => {
     const sizes = new Set<number>();
-    categoryShoes.forEach((shoe) => shoe.sizes.forEach((size) => sizes.add(size)));
+    categoryShoes.forEach((shoe) =>
+      shoe.sizes.forEach((size) => sizes.add(size))
+    );
     return Array.from(sizes).sort((a, b) => a - b);
   }, [categoryShoes]);
 
   const availableColors = useMemo(() => {
     const colors = new Set<string>();
-    categoryShoes.forEach((shoe) => shoe.colors.forEach((color) => colors.add(color)));
+    categoryShoes.forEach((shoe) =>
+      shoe.colors.forEach((color) => colors.add(color))
+    );
     return Array.from(colors).sort();
   }, [categoryShoes]);
 
@@ -66,19 +76,19 @@ const CategoryPage = () => {
 
     // Sort
     switch (sortBy) {
-      case 'name-asc':
+      case "name-asc":
         filtered.sort((a, b) => a.name.localeCompare(b.name));
         break;
-      case 'name-desc':
+      case "name-desc":
         filtered.sort((a, b) => b.name.localeCompare(a.name));
         break;
-      case 'price-asc':
+      case "price-asc":
         filtered.sort((a, b) => a.price - b.price);
         break;
-      case 'price-desc':
+      case "price-desc":
         filtered.sort((a, b) => b.price - a.price);
         break;
-      case 'newest':
+      case "newest":
         // Already in order from mock data
         break;
     }
@@ -107,7 +117,11 @@ const CategoryPage = () => {
     setPriceRange([0, 300]);
   };
 
-  const hasActiveFilters = selectedSizes.length > 0 || selectedColors.length > 0 || priceRange[0] > 0 || priceRange[1] < 300;
+  const hasActiveFilters =
+    selectedSizes.length > 0 ||
+    selectedColors.length > 0 ||
+    priceRange[0] > 0 ||
+    priceRange[1] < 300;
 
   return (
     <div className="min-h-screen">
@@ -115,9 +129,11 @@ const CategoryPage = () => {
       <div
         className="relative h-64 bg-gradient-to-br from-gray-800 to-gray-600 flex items-center justify-center"
         style={{
-          backgroundImage: categoryInfo?.image ? `url(${categoryInfo.image})` : undefined,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundImage: categoryInfo?.image
+            ? `url(${categoryInfo.image})`
+            : undefined,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       >
         <div className="absolute inset-0 bg-black/50" />
@@ -126,12 +142,20 @@ const CategoryPage = () => {
             {categoryName}
           </h1>
           <p className="text-xl text-gray-200">
-            {categoryInfo?.description || 'Explore our collection'}
+            {categoryInfo?.description || "Explore our collection"}
           </p>
         </div>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Breadcrumb Navigation */}
+        {categoryInfo && (
+          <Breadcrumb
+            items={[
+              { label: categoryInfo.name, path: `/category/${categoryName}` },
+            ]}
+          />
+        )}
         {/* Controls Bar */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
           <div className="flex items-center gap-4">
@@ -149,7 +173,8 @@ const CategoryPage = () => {
             </button>
 
             <p className="text-gray-600">
-              <span className="font-semibold">{filteredShoes.length}</span> products
+              <span className="font-semibold">{filteredShoes.length}</span>{" "}
+              products
             </p>
           </div>
 
@@ -176,7 +201,7 @@ const CategoryPage = () => {
           {/* Filters Sidebar */}
           <aside
             className={`lg:w-64 space-y-6 ${
-              showFilters ? 'block' : 'hidden lg:block'
+              showFilters ? "block" : "hidden lg:block"
             }`}
           >
             <div className="bg-white p-6 rounded-xl shadow-sm sticky top-20">
@@ -205,8 +230,8 @@ const CategoryPage = () => {
                       onClick={() => toggleSize(size)}
                       className={`px-3 py-2 rounded-lg border transition-all ${
                         selectedSizes.includes(size)
-                          ? 'border-orange-500 bg-orange-50 text-orange-700 font-semibold'
-                          : 'border-gray-300 hover:border-gray-400'
+                          ? "border-orange-500 bg-orange-50 text-orange-700 font-semibold"
+                          : "border-gray-300 hover:border-gray-400"
                       }`}
                     >
                       {size}
@@ -257,21 +282,33 @@ const CategoryPage = () => {
                     max="300"
                     step="10"
                     value={priceRange[1]}
-                    onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value)])}
+                    onChange={(e) =>
+                      setPriceRange([priceRange[0], parseInt(e.target.value)])
+                    }
                     className="w-full accent-orange-500"
                   />
                   <div className="flex gap-2">
                     <input
                       type="number"
                       value={priceRange[0]}
-                      onChange={(e) => setPriceRange([parseInt(e.target.value) || 0, priceRange[1]])}
+                      onChange={(e) =>
+                        setPriceRange([
+                          parseInt(e.target.value) || 0,
+                          priceRange[1],
+                        ])
+                      }
                       placeholder="Min"
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
                     />
                     <input
                       type="number"
                       value={priceRange[1]}
-                      onChange={(e) => setPriceRange([priceRange[0], parseInt(e.target.value) || 300])}
+                      onChange={(e) =>
+                        setPriceRange([
+                          priceRange[0],
+                          parseInt(e.target.value) || 300,
+                        ])
+                      }
                       placeholder="Max"
                       className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 text-sm"
                     />
@@ -291,7 +328,7 @@ const CategoryPage = () => {
                     shoe={shoe}
                     index={index}
                     variant="default"
-                    showBadge={shoe.featured ? 'featured' : null}
+                    showBadge={shoe.featured ? "featured" : null}
                   />
                 ))}
               </div>
@@ -300,14 +337,13 @@ const CategoryPage = () => {
                 <div className="inline-flex items-center justify-center w-16 h-16 bg-gray-100 rounded-full mb-4">
                   <X className="w-8 h-8 text-gray-400" />
                 </div>
-                <h3 className="text-xl font-display font-semibold mb-2">No products found</h3>
+                <h3 className="text-xl font-display font-semibold mb-2">
+                  No products found
+                </h3>
                 <p className="text-gray-600 mb-6">
                   Try adjusting your filters to see more results
                 </p>
-                <button
-                  onClick={clearFilters}
-                  className="btn-accent"
-                >
+                <button onClick={clearFilters} className="btn-accent">
                   Clear Filters
                 </button>
               </div>

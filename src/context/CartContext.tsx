@@ -1,11 +1,21 @@
-import { createContext, useContext, useState, type ReactNode } from 'react';
-import type { Shoe, CartItem } from '../types';
+import { createContext, useContext, useState, type ReactNode } from "react";
+import type { Shoe, CartItem } from "../types";
 
 interface CartContextType {
   cartItems: CartItem[];
-  addToCart: (shoe: Shoe, size: number, color: string, quantity: number) => void;
+  addToCart: (
+    shoe: Shoe,
+    size: number,
+    color: string,
+    quantity: number
+  ) => void;
   removeFromCart: (shoeId: string, size: number, color: string) => void;
-  updateQuantity: (shoeId: string, size: number, color: string, quantity: number) => void;
+  updateQuantity: (
+    shoeId: string,
+    size: number,
+    color: string,
+    quantity: number
+  ) => void;
   clearCart: () => void;
   getCartTotal: () => number;
   getCartItemCount: () => number;
@@ -16,14 +26,17 @@ const CartContext = createContext<CartContextType | undefined>(undefined);
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
 
-  const addToCart = (shoe: Shoe, size: number, color: string, quantity: number) => {
+  const addToCart = (
+    shoe: Shoe,
+    size: number,
+    color: string,
+    quantity: number
+  ) => {
     setCartItems((prevItems) => {
       // Check if item already exists in cart
       const existingItemIndex = prevItems.findIndex(
         (item) =>
-          item.shoe.id === shoe.id &&
-          item.size === size &&
-          item.color === color
+          item.shoe.id === shoe.id && item.size === size && item.color === color
       );
 
       if (existingItemIndex > -1) {
@@ -42,12 +55,21 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     setCartItems((prevItems) =>
       prevItems.filter(
         (item) =>
-          !(item.shoe.id === shoeId && item.size === size && item.color === color)
+          !(
+            item.shoe.id === shoeId &&
+            item.size === size &&
+            item.color === color
+          )
       )
     );
   };
 
-  const updateQuantity = (shoeId: string, size: number, color: string, quantity: number) => {
+  const updateQuantity = (
+    shoeId: string,
+    size: number,
+    color: string,
+    quantity: number
+  ) => {
     if (quantity <= 0) {
       removeFromCart(shoeId, size, color);
       return;
@@ -67,7 +89,11 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const getCartTotal = () => {
-    return cartItems.reduce((total, item) => total + item.shoe.price * item.quantity, 0);
+    return cartItems.reduce(
+      (total, item) => total + item.shoe.price * item.quantity,
+
+      0
+    );
   };
 
   const getCartItemCount = () => {
@@ -94,7 +120,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
-    throw new Error('useCart must be used within a CartProvider');
+    throw new Error("useCart must be used within a CartProvider");
   }
   return context;
 };

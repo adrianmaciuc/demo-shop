@@ -25,7 +25,7 @@ function App() {
             </Routes>
           </main>
           <footer className="py-8 px-4 text-center text-gray-600 text-sm border-t border-gray-200">
-            <p>© 2024 Sole Street. All rights reserved.</p>
+            <p>© 2025 Sole Street. All rights reserved.</p>
           </footer>
         </div>
       </Router>

@@ -60,7 +60,11 @@ export default function EmptyState({
         <motion.button
           onClick={onAction}
           className="btn-accent"
-          initial={showAnimation ? { opacity: 0, scale: 0.9 } : { opacity: 1, scale: 1 }}
+          initial={
+            showAnimation
+              ? { opacity: 0, scale: 0.9 }
+              : { opacity: 1, scale: 1 }
+          }
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.4, delay: 0.4 }}
           whileHover={{ scale: 1.05 }}

@@ -30,7 +30,7 @@ const Navigation = () => {
             style={{ color: "var(--color-primary)" }}
             data-testid="nav-logo"
           >
-            Sole Street
+            Apex Shoes
           </Link>
 
           {/* Desktop Navigation */}

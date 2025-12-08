@@ -230,57 +230,6 @@ src/
 │       └── ...
 ```
 
-### 6.3 Component Tests
-
-**Navigation Component:**
-
-- [ ] Renders navigation bar with logo
-- [ ] Displays all navigation links correctly
-- [ ] Shows mobile menu toggle on smaller screens
-- [ ] Cart count updates when cart state changes
-- [ ] Navigation links route correctly
-
-**ProductCard Component:**
-
-- [ ] Renders product image, name, price correctly
-- [ ] Displays variant-specific content (default, compact, featured)
-- [ ] Shows add to cart button
-- [ ] Handles click events
-- [ ] Displays price formatting correctly
-
-**Home Page:**
-
-- [ ] Renders hero section
-- [ ] Displays featured products grid
-- [ ] Shows category cards
-- [ ] Renders new arrivals section
-- [ ] Newsletter form displays
-
-**Category Page:**
-
-- [ ] Filters products by category
-- [ ] Sorting functionality works (price, newest)
-- [ ] Filter sidebar updates results
-- [ ] Breadcrumb navigation displays correctly
-- [ ] Product count updates on filter change
-
-**Shoe Detail Page:**
-
-- [ ] Renders product information
-- [ ] Image gallery displays correctly
-- [ ] Size selector works
-- [ ] Color selector works (if applicable)
-- [ ] Quantity selector updates value
-- [ ] Add to cart adds correct item
-
-**Cart Page:**
-
-- [ ] Displays all cart items
-- [ ] Remove item functionality works
-- [ ] Quantity updates work
-- [ ] Order summary calculates correctly
-- [ ] Handles empty cart state
-
 ### 6.4 Context & State Tests
 
 **CartContext:**

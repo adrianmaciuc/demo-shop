@@ -125,7 +125,7 @@ const AboutPage = () => {
               data-testid="about-story-text"
             >
               <p>
-                Sole Street was born from a simple belief: everyone deserves
+                Apex Shoes was born from a simple belief: everyone deserves
                 footwear that makes them feel confident, comfortable, and
                 authentic. What started as a small workshop in Cluj-Napoca has
                 grown into a global movement celebrating individuality through
@@ -157,7 +157,7 @@ const AboutPage = () => {
           >
             <img
               src="https://images.unsplash.com/photo-1543163521-1bf539c55dd2?w=800"
-              alt="Sole Street workshop"
+              alt="Apex Shoes workshop"
               className="w-full h-full object-cover"
             />
           </motion.div>
@@ -457,7 +457,7 @@ const AboutPage = () => {
             className="text-xl text-gray-600 mb-8"
             data-testid="about-cta-description"
           >
-            Experience the Sole Street difference. Discover footwear that moves
+            Experience the Apex Shoes difference. Discover footwear that moves
             with you, reflects your style, and supports a sustainable future.
           </p>
           <motion.a

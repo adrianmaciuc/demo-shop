@@ -15,6 +15,7 @@ import Breadcrumb from "../components/layout/Breadcrumb";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../context/CartContext";
 import LazyImage from "../components/ui/LazyImage";
+import ImageZoom from "../components/ui/ImageZoom";
 
 const ShoePage = () => {
   const { id } = useParams<{ id: string }>();
@@ -159,16 +160,14 @@ const ShoePage = () => {
               className="relative rounded-2xl overflow-hidden"
               data-testid="shoe-main-image-container"
             >
-              <LazyImage
+              <ImageZoom
                 src={shoe.images[selectedImage]}
                 alt={shoe.name}
-                aspectRatio="square"
-                className="w-full h-full object-cover"
-                data-testid={`shoe-main-image-${selectedImage}`}
+                className="w-full h-full"
               />
               {shoe.featured && (
                 <div
-                  className="absolute top-4 right-4 bg-yellow-400 text-gray-900 px-4 py-2 rounded-full text-sm font-semibold"
+                  className="absolute top-4 right-4 bg-yellow-400 text-gray-900 px-4 py-2 rounded-full text-sm font-semibold pointer-events-none"
                   data-testid="shoe-featured-badge"
                 >
                   Featured

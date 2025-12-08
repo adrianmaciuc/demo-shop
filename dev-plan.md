@@ -320,6 +320,7 @@ src/
 - [x] Skeleton loading states
 - [x] Toast notifications (add to cart confirmation)
 - [x] Image zoom functionality (ShoePage gallery)
+- [x] Full page transitions (Framer Motion AnimatePresence + PageTransition component)
 
 ### 7.2 Performance
 
@@ -427,6 +428,7 @@ src/
   - ProductCardSkeleton component
   - Code splitting with React.lazy() + Suspense
   - ImageZoom component for product gallery
+  - Full page transitions with Framer Motion (fade + slide animations)
 - **Jest Testing Framework Setup**
   - Configuration with ts-jest, jsdom, and test scripts
   - CartContext comprehensive unit tests (25 tests, 100% coverage)

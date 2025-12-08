@@ -1,8 +1,10 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
+import { AnimatePresence } from "framer-motion";
 import Navigation from "./components/layout/Navigation";
 import { CartProvider } from "./context/CartContext";
 import ProductCardSkeleton from "./components/product/ProductCardSkeleton";
+import PageTransition from "./components/ui/PageTransition";
 
 // Lazy load pages
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -33,19 +35,23 @@ function App() {
         >
           <Navigation />
           <main className="flex-1">
-            <Suspense fallback={<PageLoader />}>
-              <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route
-                  path="/category/:categoryName"
-                  element={<CategoryPage />}
-                />
-                <Route path="/shoe/:id" element={<ShoePage />} />
-                <Route path="/cart" element={<CartPage />} />
-                <Route path="/about" element={<AboutPage />} />
-                <Route path="/contact" element={<ContactPage />} />
-              </Routes>
-            </Suspense>
+            <AnimatePresence mode="wait">
+              <Suspense fallback={<PageLoader />}>
+                <PageTransition>
+                  <Routes>
+                    <Route path="/" element={<HomePage />} />
+                    <Route
+                      path="/category/:categoryName"
+                      element={<CategoryPage />}
+                    />
+                    <Route path="/shoe/:id" element={<ShoePage />} />
+                    <Route path="/cart" element={<CartPage />} />
+                    <Route path="/about" element={<AboutPage />} />
+                    <Route path="/contact" element={<ContactPage />} />
+                  </Routes>
+                </PageTransition>
+              </Suspense>
+            </AnimatePresence>
           </main>
           <footer className="py-8 px-4 text-center text-gray-600 text-sm border-t border-gray-200">
             <p>© 2025 Apex Shoes. All rights reserved.</p>

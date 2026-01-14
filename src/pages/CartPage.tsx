@@ -204,7 +204,7 @@ const CartPage = () => {
                             item.shoe.id,
                             item.size,
                             item.color,
-                            item.quantity - 1
+                            item.quantity - 1,
                           )
                         }
                         className="p-2 hover:bg-gray-50 transition-colors"
@@ -225,7 +225,7 @@ const CartPage = () => {
                             item.shoe.id,
                             item.size,
                             item.color,
-                            item.quantity + 1
+                            item.quantity + 1,
                           )
                         }
                         className="p-2 hover:bg-gray-50 transition-colors"

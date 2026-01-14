@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { CreditCard, Banknote, ArrowLeft, ShoppingBag } from "lucide-react";
-import { OrderSummary } from "../types";
+import type { OrderSummary } from "../types";
 import {
   validateCardNumber,
   validateExpiryDate,
@@ -46,7 +46,7 @@ const CheckoutPage = () => {
     }
   }, [orderData, navigate]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     let formattedValue = value;
 
@@ -66,8 +66,10 @@ const CheckoutPage = () => {
     }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = (e?: FormEvent) => {
+    if (e) {
+      e.preventDefault();
+    }
 
     if (paymentMethod === "cash") {
       // No validation needed for cash on delivery

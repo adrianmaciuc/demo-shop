@@ -9,7 +9,7 @@ const AboutPage = () => {
 
   const [hoveredValue, setHoveredValue] = useState<number | null>(null);
   const [expandedMilestone, setExpandedMilestone] = useState<number | null>(
-    null
+    null,
   );
 
   const values = [

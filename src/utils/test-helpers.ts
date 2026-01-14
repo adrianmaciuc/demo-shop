@@ -18,14 +18,14 @@ export const calculateShippingCost = (subtotal: number): number => {
 
 export const calculateTax = (
   subtotal: number,
-  taxRate: number = 0.08
+  taxRate: number = 0.08,
 ): number => {
   return parseFloat((subtotal * taxRate).toFixed(2));
 };
 
 export const calculateTotal = (
   subtotal: number,
-  taxRate: number = 0.08
+  taxRate: number = 0.08,
 ): number => {
   const tax = calculateTax(subtotal, taxRate);
   const shipping = calculateShippingCost(subtotal);
@@ -46,7 +46,7 @@ export const filterByCategory = (items: any[], category: string): any[] => {
 
 export const sortByPrice = (
   items: any[],
-  order: "asc" | "desc" = "asc"
+  order: "asc" | "desc" = "asc",
 ): any[] => {
   const sorted = [...items].sort((a, b) => a.price - b.price);
   return order === "desc" ? sorted.reverse() : sorted;
@@ -54,7 +54,7 @@ export const sortByPrice = (
 
 export const sortByName = (
   items: any[],
-  order: "asc" | "desc" = "asc"
+  order: "asc" | "desc" = "asc",
 ): any[] => {
   const sorted = [...items].sort((a, b) => a.name.localeCompare(b.name));
   return order === "desc" ? sorted.reverse() : sorted;
@@ -66,6 +66,6 @@ export const searchShoes = (items: any[], query: string): any[] => {
     (item) =>
       item.name.toLowerCase().includes(lowerQuery) ||
       item.brand.toLowerCase().includes(lowerQuery) ||
-      item.description.toLowerCase().includes(lowerQuery)
+      item.description.toLowerCase().includes(lowerQuery),
   );
 };

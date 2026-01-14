@@ -30,7 +30,7 @@ export default function ParticleBurst({
       x: Math.cos((i / particleCount) * Math.PI * 2) * burstRadius,
       y: Math.sin((i / particleCount) * Math.PI * 2) * burstRadius,
       delay: i * 0.02,
-    })
+    }),
   );
 
   return (

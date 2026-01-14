@@ -17,7 +17,7 @@ interface WishlistContextType {
 }
 
 const WishlistContext = createContext<WishlistContextType | undefined>(
-  undefined
+  undefined,
 );
 
 const WISHLIST_STORAGE_KEY = "apex_shoes_wishlist";
@@ -59,7 +59,7 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
 
   const removeFromWishlist = (shoeId: string) => {
     setWishlistItems((prevItems) =>
-      prevItems.filter((item) => item.id !== shoeId)
+      prevItems.filter((item) => item.id !== shoeId),
     );
   };
 

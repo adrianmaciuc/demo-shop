@@ -7,14 +7,14 @@ interface CartContextType {
     shoe: Shoe,
     size: number,
     color: string,
-    quantity: number
+    quantity: number,
   ) => void;
   removeFromCart: (shoeId: string, size: number, color: string) => void;
   updateQuantity: (
     shoeId: string,
     size: number,
     color: string,
-    quantity: number
+    quantity: number,
   ) => void;
   clearCart: () => void;
   getCartTotal: () => number;
@@ -30,13 +30,15 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     shoe: Shoe,
     size: number,
     color: string,
-    quantity: number
+    quantity: number,
   ) => {
     setCartItems((prevItems) => {
       // Check if item already exists in cart
       const existingItemIndex = prevItems.findIndex(
         (item) =>
-          item.shoe.id === shoe.id && item.size === size && item.color === color
+          item.shoe.id === shoe.id &&
+          item.size === size &&
+          item.color === color,
       );
 
       if (existingItemIndex > -1) {
@@ -59,8 +61,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
             item.shoe.id === shoeId &&
             item.size === size &&
             item.color === color
-          )
-      )
+          ),
+      ),
     );
   };
 
@@ -68,7 +70,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     shoeId: string,
     size: number,
     color: string,
-    quantity: number
+    quantity: number,
   ) => {
     if (quantity <= 0) {
       removeFromCart(shoeId, size, color);
@@ -79,8 +81,8 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       prevItems.map((item) =>
         item.shoe.id === shoeId && item.size === size && item.color === color
           ? { ...item, quantity }
-          : item
-      )
+          : item,
+      ),
     );
   };
 
@@ -92,7 +94,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
     return cartItems.reduce(
       (total, item) => total + item.shoe.price * item.quantity,
 
-      0
+      0,
     );
   };
 

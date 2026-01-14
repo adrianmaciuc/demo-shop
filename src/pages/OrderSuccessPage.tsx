@@ -1,28 +1,33 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { CheckCircle, Home, Package } from "lucide-react";
 import { useCart } from "../context/CartContext";
-import { CompletedOrder } from "../types";
+import type { CompletedOrder } from "../types";
 
 const OrderSuccessPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
   const { clearCart } = useCart();
   const orderData = location.state as CompletedOrder | null;
+  const cartCleared = useRef(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Clear cart and redirect if no order data
+  // Clear cart once on mount if we have order data
   useEffect(() => {
     if (!orderData) {
       navigate("/");
       return;
     }
-    // Clear cart on successful order
-    clearCart();
+
+    // Clear cart only once
+    if (!cartCleared.current) {
+      clearCart();
+      cartCleared.current = true;
+    }
   }, [orderData, clearCart, navigate]);
 
   if (!orderData) {

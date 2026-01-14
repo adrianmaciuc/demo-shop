@@ -30,7 +30,7 @@ const ShoePage = () => {
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [quantity, setQuantity] = useState(1);
   const [openAccordion, setOpenAccordion] = useState<string | null>(
-    "description"
+    "description",
   );
   const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [wishlistParticleActive, setWishlistParticleActive] = useState(false);

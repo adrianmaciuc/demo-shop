@@ -32,14 +32,14 @@ const CategoryPage = () => {
 
   // Filter shoes by category
   const categoryShoes = shoes.filter(
-    (shoe) => shoe.category === (categoryName as ShoeCategory)
+    (shoe) => shoe.category === (categoryName as ShoeCategory),
   );
 
   // Get all available sizes and colors for this category
   const availableSizes = useMemo(() => {
     const sizes = new Set<number>();
     categoryShoes.forEach((shoe) =>
-      shoe.sizes.forEach((size) => sizes.add(size))
+      shoe.sizes.forEach((size) => sizes.add(size)),
     );
     return Array.from(sizes).sort((a, b) => a - b);
   }, [categoryShoes]);
@@ -47,7 +47,7 @@ const CategoryPage = () => {
   const availableColors = useMemo(() => {
     const colors = new Set<string>();
     categoryShoes.forEach((shoe) =>
-      shoe.colors.forEach((color) => colors.add(color))
+      shoe.colors.forEach((color) => colors.add(color)),
     );
     return Array.from(colors).sort();
   }, [categoryShoes]);
@@ -59,20 +59,20 @@ const CategoryPage = () => {
     // Filter by size
     if (selectedSizes.length > 0) {
       filtered = filtered.filter((shoe) =>
-        selectedSizes.some((size) => shoe.sizes.includes(size))
+        selectedSizes.some((size) => shoe.sizes.includes(size)),
       );
     }
 
     // Filter by color
     if (selectedColors.length > 0) {
       filtered = filtered.filter((shoe) =>
-        selectedColors.some((color) => shoe.colors.includes(color))
+        selectedColors.some((color) => shoe.colors.includes(color)),
       );
     }
 
     // Filter by price
     filtered = filtered.filter(
-      (shoe) => shoe.price >= priceRange[0] && shoe.price <= priceRange[1]
+      (shoe) => shoe.price >= priceRange[0] && shoe.price <= priceRange[1],
     );
 
     // Sort
@@ -100,14 +100,14 @@ const CategoryPage = () => {
   // Toggle size filter
   const toggleSize = (size: number) => {
     setSelectedSizes((prev) =>
-      prev.includes(size) ? prev.filter((s) => s !== size) : [...prev, size]
+      prev.includes(size) ? prev.filter((s) => s !== size) : [...prev, size],
     );
   };
 
   // Toggle color filter
   const toggleColor = (color: string) => {
     setSelectedColors((prev) =>
-      prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color]
+      prev.includes(color) ? prev.filter((c) => c !== color) : [...prev, color],
     );
   };
 

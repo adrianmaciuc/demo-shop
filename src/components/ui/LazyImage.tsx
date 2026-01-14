@@ -33,7 +33,7 @@ const LazyImage = ({
       },
       {
         rootMargin: "50px", // Start loading 50px before image enters viewport
-      }
+      },
     );
 
     observer.observe(imgRef.current);

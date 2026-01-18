@@ -6,6 +6,7 @@ import {
   type ReactNode,
 } from "react";
 import type { ExtendedUser } from "../types";
+import { useToast } from "./ToastContext";
 
 interface AuthContextType {
   user: ExtendedUser | null;
@@ -24,6 +25,25 @@ interface AuthContextType {
   updateProfile: (data: Partial<ExtendedUser>) => Promise<void>;
 }
 
+type AuthError =
+  | "EMAIL_TAKEN"
+  | "USERNAME_TAKEN"
+  | "INVALID_CREDENTIALS"
+  | "NETWORK_ERROR"
+  | "SESSION_EXPIRED"
+  | "UNKNOWN";
+
+const ERROR_MESSAGES: Record<AuthError, string> = {
+  EMAIL_TAKEN:
+    "This email is already registered. Please use a different email or username.",
+  USERNAME_TAKEN:
+    "This username is already taken. Please choose a different username.",
+  INVALID_CREDENTIALS: "Invalid email or password. Please try again.",
+  NETWORK_ERROR: "Unable to connect. Please check your internet connection.",
+  SESSION_EXPIRED: "Your session has expired. Please log in again.",
+  UNKNOWN: "An unexpected error occurred. Please try again.",
+};
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 const AUTH_TOKEN_KEY = "apex_shoes_auth_token";
@@ -34,6 +54,44 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { showError } = useToast();
+
+  const parseAuthError = (errorMessage: string): AuthError => {
+    const lowerMessage = errorMessage.toLowerCase();
+    if (
+      lowerMessage.includes("email") ||
+      lowerMessage.includes("already used") ||
+      lowerMessage.includes("duplicate")
+    ) {
+      return "EMAIL_TAKEN";
+    }
+    if (
+      lowerMessage.includes("username") ||
+      lowerMessage.includes("username")
+    ) {
+      return "USERNAME_TAKEN";
+    }
+    if (
+      lowerMessage.includes("invalid") ||
+      lowerMessage.includes("credential") ||
+      lowerMessage.includes("password")
+    ) {
+      return "INVALID_CREDENTIALS";
+    }
+    if (
+      lowerMessage.includes("network") ||
+      lowerMessage.includes("fetch") ||
+      lowerMessage.includes("connection")
+    ) {
+      return "NETWORK_ERROR";
+    }
+    return "UNKNOWN";
+  };
+
+  const getUserFriendlyError = (rawError: string): string => {
+    const errorType = parseAuthError(rawError);
+    return ERROR_MESSAGES[errorType];
+  };
 
   useEffect(() => {
     const initAuth = async () => {
@@ -53,10 +111,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           } else {
             localStorage.removeItem(AUTH_TOKEN_KEY);
             setToken(null);
+            if (response.status === 401) {
+              showError("Your session has expired. Please log in again.");
+            }
           }
         } catch {
           localStorage.removeItem(AUTH_TOKEN_KEY);
           setToken(null);
+          showError("Unable to restore your session. Please log in again.");
         }
       }
       setIsLoading(false);
@@ -81,7 +143,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error?.message || "Login failed");
+        const userMessage = getUserFriendlyError(data.error?.message || "");
+        setError(userMessage);
+        throw new Error(userMessage);
       }
 
       const { jwt, user: userData } = data;
@@ -89,8 +153,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setToken(jwt);
       setUser(userData);
     } catch (err) {
-      const message = err instanceof Error ? err.message : "Login failed";
-      setError(message);
+      if (!(err instanceof Error && err.message in ERROR_MESSAGES)) {
+        const message = err instanceof Error ? err.message : "Login failed";
+        const userMessage = getUserFriendlyError(message);
+        setError(userMessage);
+      }
       throw err;
     } finally {
       setIsLoading(false);
@@ -117,7 +184,9 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error?.message || "Registration failed");
+        const userMessage = getUserFriendlyError(data.error?.message || "");
+        setError(userMessage);
+        throw new Error(userMessage);
       }
 
       const { jwt, user: userData } = data;
@@ -125,9 +194,12 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       setToken(jwt);
       setUser(userData);
     } catch (err) {
-      const message =
-        err instanceof Error ? err.message : "Registration failed";
-      setError(message);
+      if (!(err instanceof Error && err.message in ERROR_MESSAGES)) {
+        const message =
+          err instanceof Error ? err.message : "Registration failed";
+        const userMessage = getUserFriendlyError(message);
+        setError(userMessage);
+      }
       throw err;
     } finally {
       setIsLoading(false);

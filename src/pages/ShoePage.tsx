@@ -15,6 +15,7 @@ import Breadcrumb from "../components/layout/Breadcrumb";
 import { motion, AnimatePresence } from "framer-motion";
 import { useCart } from "../context/CartContext";
 import { useWishlist } from "../context/WishlistContext";
+import { useToast } from "../context/ToastContext";
 import LazyImage from "../components/ui/LazyImage";
 import ImageZoom from "../components/ui/ImageZoom";
 import ParticleBurst from "../components/ui/ParticleBurst";
@@ -24,6 +25,7 @@ const ShoePage = () => {
   const shoe = shoes.find((s) => s.id === id);
   const { addToCart } = useCart();
   const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const { showError, showSuccess } = useToast();
 
   const [selectedImage, setSelectedImage] = useState(0);
   const [selectedSize, setSelectedSize] = useState<number | null>(null);
@@ -32,7 +34,6 @@ const ShoePage = () => {
   const [openAccordion, setOpenAccordion] = useState<string | null>(
     "description",
   );
-  const [showSuccessMessage, setShowSuccessMessage] = useState(false);
   const [wishlistParticleActive, setWishlistParticleActive] = useState(false);
 
   const inWishlist = shoe ? isInWishlist(shoe.id) : false;
@@ -86,17 +87,12 @@ const ShoePage = () => {
 
   const handleAddToCart = () => {
     if (!selectedSize) {
-      alert("Please select a size");
+      showError("Please select a size before adding to cart");
       return;
     }
 
     addToCart(shoe, selectedSize, selectedColor, quantity);
-    setShowSuccessMessage(true);
-
-    // Hide success message after 3 seconds
-    setTimeout(() => {
-      setShowSuccessMessage(false);
-    }, 3000);
+    showSuccess(`${quantity} x ${shoe.name} added to cart`);
   };
 
   const handleWishlistClick = () => {
@@ -112,35 +108,6 @@ const ShoePage = () => {
 
   return (
     <div className="min-h-screen" data-testid="shoe-page">
-      {/* Success Toast */}
-      <AnimatePresence>
-        {showSuccessMessage && (
-          <motion.div
-            initial={{ opacity: 0, y: -50 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -50 }}
-            className="fixed top-20 right-4 z-50 bg-green-500 text-white px-6 py-4 rounded-lg shadow-lg flex items-center gap-3"
-            data-testid="shoe-success-toast"
-          >
-            <Check className="w-5 h-5" data-testid="shoe-success-toast-icon" />
-            <div data-testid="shoe-success-toast-content">
-              <p
-                className="font-semibold"
-                data-testid="shoe-success-toast-title"
-              >
-                Added to cart!
-              </p>
-              <p
-                className="text-sm text-green-100"
-                data-testid="shoe-success-toast-description"
-              >
-                {quantity} x {shoe.name}
-              </p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
       {/* Breadcrumb Navigation */}
       <div
         className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4"

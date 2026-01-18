@@ -34,23 +34,28 @@ const RegisterPage = () => {
     validate: (values) => {
       const errors: Record<string, string> = {};
 
+      const usernameResult = validateUsername(values.username);
       if (!values.username) {
         errors.username = "Username is required";
-      } else if (!validateUsername(values.username)) {
+      } else if (!usernameResult.valid) {
         errors.username =
+          usernameResult.error ||
           "Username must be at least 3 characters and contain only letters, numbers, and underscores";
       }
 
+      const emailResult = validateEmail(values.email);
       if (!values.email) {
         errors.email = "Email is required";
-      } else if (!validateEmail(values.email)) {
-        errors.email = "Invalid email address";
+      } else if (!emailResult.valid) {
+        errors.email = emailResult.error || "Invalid email address";
       }
 
+      const passwordResult = validatePassword(values.password);
       if (!values.password) {
         errors.password = "Password is required";
-      } else if (!validatePassword(values.password)) {
-        errors.password = "Password must be at least 6 characters";
+      } else if (!passwordResult.valid) {
+        errors.password =
+          passwordResult.error || "Password must be at least 6 characters";
       }
 
       if (!values.confirmPassword) {
@@ -68,8 +73,12 @@ const RegisterPage = () => {
       try {
         await register(values.username, values.email, values.password);
         navigate(redirect, { replace: true });
-      } catch {
-        setRegisterError(error || "Registration failed. Please try again.");
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error
+            ? err.message
+            : "Registration failed. Please try again.";
+        setRegisterError(errorMessage);
       }
     },
   });

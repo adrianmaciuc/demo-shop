@@ -8,6 +8,7 @@ import {
 import type { Shoe } from "../types";
 import { useAuth } from "./AuthContext";
 import { getApiUrl } from "../utils/api";
+import { useToast } from "./ToastContext";
 
 interface WishlistContextType {
   wishlistItems: Shoe[];
@@ -29,6 +30,7 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
   const [wishlistItems, setWishlistItems] = useState<Shoe[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [apiUrl] = useState(() => getApiUrl());
+  const { showError, showSuccess } = useToast();
 
   useEffect(() => {
     const savedWishlist = localStorage.getItem(WISHLIST_STORAGE_KEY);
@@ -86,12 +88,13 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
           }
         } catch (error) {
           console.error("Failed to sync wishlist:", error);
+          showError("Unable to sync wishlist. Some changes may not be saved.");
         }
       };
 
       syncWishlist();
     }
-  }, [isAuthenticated, token, isLoaded]);
+  }, [isAuthenticated, token, isLoaded, apiUrl, showError]);
 
   useEffect(() => {
     if (isLoaded) {
@@ -100,12 +103,20 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
   }, [wishlistItems, isLoaded]);
 
   const addToWishlist = async (shoe: Shoe) => {
+    const isAlreadyInWishlist = wishlistItems.some(
+      (item) => item.id === shoe.id,
+    );
+
     setWishlistItems((prevItems) => {
-      if (prevItems.some((item) => item.id === shoe.id)) {
+      if (isAlreadyInWishlist) {
         return prevItems;
       }
       return [...prevItems, shoe];
     });
+
+    if (!isAlreadyInWishlist) {
+      showSuccess(`${shoe.name} added to wishlist`);
+    }
 
     if (isAuthenticated && token) {
       try {
@@ -126,6 +137,7 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
         });
       } catch (error) {
         console.error("Failed to add to backend wishlist:", error);
+        showError("Failed to add to wishlist. Please try again.");
       }
     }
   };
@@ -159,6 +171,7 @@ export const WishlistProvider = ({ children }: { children: ReactNode }) => {
         }
       } catch (error) {
         console.error("Failed to remove from backend wishlist:", error);
+        showError("Failed to remove from wishlist. Please try again.");
       }
     }
   };

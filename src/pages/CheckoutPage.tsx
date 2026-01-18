@@ -101,20 +101,23 @@ const CheckoutPage = () => {
       cvv: "",
     };
 
-    if (!validateCardNumber(formData.cardNumber)) {
-      errors.cardNumber = "Please enter a valid 16-digit card number";
+    const cardResult = validateCardNumber(formData.cardNumber);
+    if (!cardResult.valid) {
+      errors.cardNumber = cardResult.error || "Invalid card number";
     }
 
     if (formData.cardholderName.trim().length < 3) {
       errors.cardholderName = "Name must be at least 3 characters";
     }
 
-    if (!validateExpiryDate(formData.expiryDate)) {
-      errors.expiryDate = "Please enter a valid expiry date (MM/YY)";
+    const expiryResult = validateExpiryDate(formData.expiryDate);
+    if (!expiryResult.valid) {
+      errors.expiryDate = expiryResult.error || "Invalid expiry date";
     }
 
-    if (!validateCVV(formData.cvv)) {
-      errors.cvv = "CVV must be 3 digits";
+    const cvvResult = validateCVV(formData.cvv);
+    if (!cvvResult.valid) {
+      errors.cvv = cvvResult.error || "Invalid CVV";
     }
 
     const hasErrors = Object.values(errors).some((error) => error !== "");

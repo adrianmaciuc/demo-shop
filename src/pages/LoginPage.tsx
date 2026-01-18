@@ -27,16 +27,19 @@ const LoginPage = () => {
     validate: (values) => {
       const errors: Record<string, string> = {};
 
+      const emailResult = validateEmail(values.identifier);
       if (!values.identifier) {
         errors.identifier = "Email is required";
-      } else if (!validateEmail(values.identifier)) {
-        errors.identifier = "Invalid email address";
+      } else if (!emailResult.valid) {
+        errors.identifier = emailResult.error || "Invalid email address";
       }
 
+      const passwordResult = validatePassword(values.password);
       if (!values.password) {
         errors.password = "Password is required";
-      } else if (!validatePassword(values.password)) {
-        errors.password = "Password must be at least 6 characters";
+      } else if (!passwordResult.valid) {
+        errors.password =
+          passwordResult.error || "Password must be at least 6 characters";
       }
 
       return errors;
@@ -48,8 +51,10 @@ const LoginPage = () => {
       try {
         await login(values.identifier, values.password);
         navigate(redirect, { replace: true });
-      } catch {
-        setLoginError(error || "Login failed. Please try again.");
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : "Invalid email or password";
+        setLoginError(errorMessage);
       }
     },
   });

@@ -19,9 +19,9 @@ global.importMeta = {
   },
 } as ImportMeta;
 
-// Mock TextEncoder and TextDecoder
-(global as unknown as { TextEncoder: typeof TextEncoder }).TextEncoder =
-  class TextEncoder {
+// Mock TextEncoder and TextDecoder if not available
+if (typeof global.TextEncoder === "undefined") {
+  global.TextEncoder = class TextEncoder {
     encode(input: string): Uint8Array {
       return new TextEncoder().encode(input);
     }
@@ -30,16 +30,21 @@ global.importMeta = {
         input as Parameters<TextDecoder["decode"]>[0],
       );
     }
-  };
+  } as unknown as typeof TextEncoder;
+}
 
-(global as unknown as { TextDecoder: typeof TextDecoder }).TextDecoder =
-  class TextDecoder {
+if (typeof global.TextDecoder === "undefined") {
+  global.TextDecoder = class TextDecoder {
     decode(input?: unknown): string {
       return new TextDecoder().decode(
         input as Parameters<TextDecoder["decode"]>[0],
       );
     }
-  };
+    readonly encoding: string = "utf-8";
+    readonly fatal: boolean = false;
+    readonly ignoreBOM: boolean = false;
+  } as unknown as typeof TextDecoder;
+}
 
 // Mock window.matchMedia for tests
 Object.defineProperty(window, "matchMedia", {

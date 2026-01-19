@@ -135,28 +135,33 @@
 
 In Supabase dashboard:
 
-1. Go to **Settings** → **Database**
-2. Copy and save these values to a secure location:
+1. Go to **Project** → Click **Connect** button (top-level navigation)
+2. Under **Connection string**, change the dropdown from **Direct connection** to **Transaction pooler**
+3. Copy the **Connection string** - use this as your `DATABASE_URL`:
+   ```
+   postgresql://postgres:[password]@[host]:6543/postgres?sslmode=require
+   ```
+4. For Strapi, also note the individual values:
    - **Host**: `[project-ref].supabase.co`
    - **Database**: `postgres`
-   - **Port**: `5432`
+   - **Port**: `5432` (direct) or `6543` (transaction pooler)
    - **Username**: `postgres`
    - **Password**: [Your master password]
-   - **Connection string (URI)**:
-     ```
-     postgresql://postgres:[password]@[host]:5432/postgres
-     ```
 
-3. Add to `.env` file (for Strapi locally):
+**Why Transaction Pooler?**
+- Supabase Free tier only allows 3 direct connections
+- Transaction pooler (port 6543) enables connection pooling
+- Better for serverless/Node.js apps like Strapi that open many short-lived connections
+- Strapi works perfectly with pooled connections
+
+5. Add to `.env` file (for Strapi):
    ```env
    DATABASE_CLIENT=postgres
-   DATABASE_HOST=[project-ref].supabase.co
-   DATABASE_PORT=5432
-   DATABASE_NAME=postgres
-   DATABASE_USERNAME=postgres
-   DATABASE_PASSWORD=[your-password]
+   DATABASE_URL=postgresql://postgres:[password]@[host]:6543/postgres?sslmode=require
    DATABASE_SSL=true
    ```
+
+**Important:** Do NOT include `https://` in any connection string - PostgreSQL uses `postgresql://` protocol.
 
 ### Step 4: Network Security
 
@@ -182,8 +187,9 @@ In Supabase dashboard:
 **Changes Required:**
 
 1. Update from SQLite to PostgreSQL connection
-2. Add SSL configuration for Supabase
-3. Keep existing connection configs as fallbacks
+2. Use `DATABASE_URL` for better pooling support
+3. Add SSL configuration for Supabase
+4. Keep existing connection configs as fallbacks
 
 ```typescript
 import path from "path";
@@ -210,11 +216,7 @@ export default ({ env }) => {
     },
     postgres: {
       connection: {
-        host: env("DATABASE_HOST", "localhost"),
-        port: env.int("DATABASE_PORT", 5432),
-        database: env("DATABASE_NAME", "postgres"),
-        user: env("DATABASE_USERNAME", "postgres"),
-        password: env("DATABASE_PASSWORD"),
+        connectionString: env("DATABASE_URL"),
         ssl: env.bool("DATABASE_SSL", true)
           ? { rejectUnauthorized: false }
           : false,
@@ -260,28 +262,17 @@ Add new PostgreSQL examples:
 # DATABASE CONFIGURATION
 # ============================================
 
-# For PostgreSQL/Supabase (Production)
+# For PostgreSQL/Supabase (Production) - USE TRANSACTION POOLER
 DATABASE_CLIENT=postgres
-DATABASE_HOST=your-project.supabase.co
-DATABASE_PORT=5432
-DATABASE_NAME=postgres
-DATABASE_USERNAME=postgres
-DATABASE_PASSWORD=your-password-here
+DATABASE_URL=postgresql://postgres:[password]@[project-ref].supabase.co:6543/postgres?sslmode=require
 DATABASE_SSL=true
 DATABASE_SCHEMA=public
+DATABASE_POOL_MIN=1
+DATABASE_POOL_MAX=3
 
 # For SQLite (Local Development - Optional)
 # DATABASE_CLIENT=sqlite
 # DATABASE_FILENAME=.tmp/data.db
-
-# ============================================
-# STRAPI CONFIGURATION
-# ============================================
-HOST=0.0.0.0
-PORT=1337
-APP_KEYS=your-app-keys-here
-JWT_SECRET=your-jwt-secret-here
-ADMIN_JWT_SECRET=your-admin-jwt-secret-here
 ```
 
 #### File: `/demo-shop-backend/package.json`
@@ -312,21 +303,19 @@ Add PostgreSQL driver dependency:
 
 ```env
 # ============================================
-# SUPABASE POSTGRESQL
+# SUPABASE POSTGRESQL (Transaction Pooler)
 # ============================================
 DATABASE_CLIENT=postgres
-DATABASE_HOST=your-project-ref.supabase.co
-DATABASE_PORT=5432
-DATABASE_NAME=postgres
-DATABASE_USERNAME=postgres
-DATABASE_PASSWORD=YOUR_SUPABASE_PASSWORD
+DATABASE_URL=postgresql://postgres:YOUR_PASSWORD@pyigzocgbryuaqqgximk.supabase.co:6543/postgres?sslmode=require
 DATABASE_SSL=true
 DATABASE_SCHEMA=public
+DATABASE_POOL_MIN=1
+DATABASE_POOL_MAX=3
 
 # ============================================
 # STRAPI CONFIG
 # ============================================
-HOST=localhost
+HOST=0.0.0.0
 PORT=1337
 APP_KEYS=your-app-keys
 JWT_SECRET=your-jwt-secret
@@ -342,16 +331,14 @@ In Render dashboard:
 
 1. Go to your backend service
 2. Settings → Environment
-3. Add variables:
+3. Add variables (use Transaction Pooler port 6543):
    ```
    DATABASE_CLIENT=postgres
-   DATABASE_HOST=[supabase-host]
-   DATABASE_PORT=5432
-   DATABASE_NAME=postgres
-   DATABASE_USERNAME=postgres
-   DATABASE_PASSWORD=[supabase-password]
+   DATABASE_URL=postgresql://postgres:[password]@[host].supabase.co:6543/postgres?sslmode=require
    DATABASE_SSL=true
    DATABASE_SCHEMA=public
+   DATABASE_POOL_MIN=1
+   DATABASE_POOL_MAX=3
    NODE_ENV=production
    ```
 4. Trigger redeploy from GitHub
@@ -444,17 +431,16 @@ npm install
 
 ### Step 2: Configure Environment
 
-Create `.env` file with Supabase credentials:
+Create `.env` file with Supabase credentials (use Transaction Pooler):
 
 ```env
 DATABASE_CLIENT=postgres
-DATABASE_HOST=your-project.supabase.co
-DATABASE_PORT=5432
-DATABASE_NAME=postgres
-DATABASE_USERNAME=postgres
-DATABASE_PASSWORD=your-password
+DATABASE_URL=postgresql://postgres:your-password@your-project.supabase.co:6543/postgres?sslmode=require
 DATABASE_SSL=true
-HOST=localhost
+DATABASE_SCHEMA=public
+DATABASE_POOL_MIN=1
+DATABASE_POOL_MAX=3
+HOST=0.0.0.0
 PORT=1337
 NODE_ENV=development
 APP_KEYS=key1,key2,key3
@@ -498,13 +484,17 @@ On first run with new database:
 
 In Supabase dashboard:
 
-1. Go to **SQL Editor**
-2. Run query to verify tables created:
+1. Go to **Settings** → **Network**
+2. Ensure your local IP is in **Allowed IPs**
+   - Find your IP: `curl https://api.ipify.org`
+   - Add it to the allowlist
+3. Go to **SQL Editor**
+4. Run query to verify tables created:
    ```sql
    SELECT * FROM information_schema.tables
    WHERE table_schema = 'public';
    ```
-3. Should see Strapi system tables created
+5. Should see Strapi system tables created
 
 ---
 
@@ -707,10 +697,10 @@ npm run preview
 
 - [ ] Create Supabase account at supabase.com
 - [ ] Create new project in Supabase
-- [ ] Note project credentials:
-  - [ ] Host: `_____________________`
-  - [ ] Password: `_____________________`
-  - [ ] Connection string saved securely
+- [ ] Get connection string (USE TRANSACTION POOLER):
+  - [ ] Go to **Project** → **Connect** button (top nav)
+  - [ ] Select **Transaction pooler** from dropdown
+  - [ ] Copy DATABASE_URL: `_____________________`
 - [ ] Configure IP whitelist in Supabase dashboard
   - [ ] Add local machine IP
   - [ ] Add Render's outbound IPs (or allow 0.0.0.0/0 with SSL)
@@ -719,6 +709,8 @@ npm run preview
 
 - [ ] Run: `npm install pg`
 - [ ] Create `.env` file with Supabase credentials
+- [ ] Use Transaction Pooler: `DATABASE_URL=postgresql://...@...supabase.co:6543/postgres?sslmode=`
+- [ ] Add pool settings: `DATABASE_POOL_MIN=1`, `DATABASE_POOL_MAX=3`
 - [ ] Update `config/database.ts` to PostgreSQL config
 - [ ] Update `.env.example` with PostgreSQL template
 - [ ] Run: `npm run dev`
@@ -743,12 +735,9 @@ npm run preview
 - [ ] Commit changes to GitHub
 - [ ] Update Render environment variables:
   - [ ] DATABASE_CLIENT=postgres
-  - [ ] DATABASE_HOST=`_____________________`
-  - [ ] DATABASE_PORT=5432
-  - [ ] DATABASE_NAME=postgres
-  - [ ] DATABASE_USERNAME=postgres
-  - [ ] DATABASE_PASSWORD=`_____________________`
-  - [ ] DATABASE_SSL=true
+  - [ ] DATABASE_URL=`postgresql://postgres:[password]@[host].supabase.co:6543/postgres?sslmode=require`
+  - [ ] DATABASE_POOL_MIN=1
+  - [ ] DATABASE_POOL_MAX=3
 - [ ] Trigger manual deploy in Render
 - [ ] Monitor deploy logs for errors
 - [ ] Test production API at `https://your-backend.onrender.com/api`
@@ -911,7 +900,13 @@ SELECT COUNT(*) FROM orders;
 ### Connection Pooling
 
 - **Local**: Strapi uses connection pooling (default: 2-10 connections)
-- **Production**: Render may have connection limits - monitor usage
+- **Supabase Free**: Only 3 direct connections - USE TRANSACTION POOLER (port 6543)
+- **Production**: Use `DATABASE_URL` with transaction pooler for better connection management
+- **Pool settings** (add to `.env`):
+  ```
+  DATABASE_POOL_MIN=1
+  DATABASE_POOL_MAX=3
+  ```
 
 ### Data Migration
 
@@ -925,7 +920,12 @@ SELECT COUNT(*) FROM orders;
 
 - Storage: 500MB
 - Bandwidth: 2GB/month
-- Database connections: 3 concurrent
+- Database connections: **3 direct** (use Transaction Pooler for more)
+
+**Critical for Free Tier:**
+- Use **Transaction Pooler** (port 6543) for connection pooling
+- Set pool limits: `DATABASE_POOL_MIN=1`, `DATABASE_POOL_MAX=3`
+- This allows handling more concurrent requests despite the 3 connection limit
 
 **When to upgrade:**
 
@@ -949,11 +949,13 @@ SELECT COUNT(*) FROM orders;
 
 | Issue                                    | Solution                               |
 | ---------------------------------------- | -------------------------------------- |
+| `getaddrinfo ENOTFOUND https`            | Remove `https://` from host - use `postgresql://` protocol |
+| `Knex: Timeout acquiring a connection`   | Use Transaction Pooler (port 6543) + DATABASE_URL |
 | `ERROR: password authentication failed`  | Check Supabase password in `.env`      |
 | `connect ECONNREFUSED`                   | Verify Supabase host and whitelist IP  |
-| `SSL: CERTIFICATE_VERIFY_FAILED`         | Set `DATABASE_SSL=true` in config      |
+| `SSL: CERTIFICATE_VERIFY_FAILED`         | Set `sslmode=require` in DATABASE_URL  |
 | `error: relation "shoes" does not exist` | Create content type in Strapi admin    |
-| `timeout connecting to database`         | Check Render's outbound IP in Supabase |
+| `timeout connecting to database`         | Use Transaction Pooler (Supabase Free) |
 
 ---
 

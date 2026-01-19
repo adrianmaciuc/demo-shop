@@ -23,7 +23,7 @@ const ProductCard = ({
   const getBadgeContent = () => {
     if (showBadge === "featured") {
       return (
-        <div className="absolute top-4 right-4 bg-yellow-400 text-gray-900 px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
+        <div className="absolute top-4 left-4 bg-yellow-400 text-gray-900 px-3 py-1 rounded-full text-sm font-semibold flex items-center gap-1">
           <Star className="w-4 h-4 fill-current" />
           Featured
         </div>

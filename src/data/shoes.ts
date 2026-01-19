@@ -3150,7 +3150,7 @@ export const shoes: Shoe[] = [
     price: 169.99,
     category: "formal",
     images: [
-      "https://images.unsplash.com/photo-1533867368555-0bb8c6d6ec84?w=800",
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800",
     ],
     sizes: [7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11],
     colors: ["Black", "Dark Brown"],
@@ -3166,36 +3166,12 @@ export const shoes: Shoe[] = [
     inStock: true,
   },
   {
-    id: "for-003",
+    id: "for-054",
     name: "Monk Strap Premium",
     brand: "LuxeFootwear",
     price: 199.99,
     category: "formal",
-    images: [
-      "https://images.unsplash.com/photo-1582897085656-c5ab6d031d8f?w=800",
-    ],
-    sizes: [8, 9, 10, 11, 12],
-    colors: ["Black", "Brown", "Tan"],
-    description:
-      "Distinguished style statement. Double monk strap for the discerning gentleman.",
-    features: [
-      "Italian leather",
-      "Double buckle",
-      "Leather lining",
-      "Hand-finished",
-    ],
-    featured: false,
-    inStock: true,
-  },
-  {
-    id: "for-003",
-    name: "Monk Strap Premium",
-    brand: "LuxeFootwear",
-    price: 199.99,
-    category: "formal",
-    images: [
-      "https://images.unsplash.com/photo-1582897085656-c5ab6d031d8f?w=800",
-    ],
+    images: ["https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800"],
     sizes: [8, 9, 10, 11, 12],
     colors: ["Black", "Brown", "Tan"],
     description:
@@ -3237,7 +3213,7 @@ export const shoes: Shoe[] = [
     price: 189.99,
     category: "formal",
     images: [
-      "https://images.unsplash.com/photo-1533867368555-0bb8c6d6ec84?w=800",
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800",
     ],
     sizes: [7, 8, 9, 10, 11, 12],
     colors: ["Brown", "Cognac"],
@@ -3257,9 +3233,7 @@ export const shoes: Shoe[] = [
     brand: "FormalLoafer",
     price: 169.99,
     category: "formal",
-    images: [
-      "https://images.unsplash.com/photo-1582897085656-c5ab6d031d8f?w=800",
-    ],
+    images: ["https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800"],
     sizes: [7, 8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],
     description: "Formal loafer for business casual dress code.",
@@ -3295,7 +3269,7 @@ export const shoes: Shoe[] = [
     price: 199.99,
     category: "formal",
     images: [
-      "https://images.unsplash.com/photo-1533867368555-0bb8c6d6ec84?w=800",
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800",
     ],
     sizes: [7, 8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],
@@ -3315,9 +3289,7 @@ export const shoes: Shoe[] = [
     brand: "FormalSlip",
     price: 179.99,
     category: "formal",
-    images: [
-      "https://images.unsplash.com/photo-1582897085656-c5ab6d031d8f?w=800",
-    ],
+    images: ["https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800"],
     sizes: [7, 8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],
     description: "Convenient slip-on formal shoe for busy professionals.",
@@ -3353,7 +3325,7 @@ export const shoes: Shoe[] = [
     price: 209.99,
     category: "formal",
     images: [
-      "https://images.unsplash.com/photo-1533867368555-0bb8c6d6ec84?w=800",
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800",
     ],
     sizes: [8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],
@@ -3373,9 +3345,7 @@ export const shoes: Shoe[] = [
     brand: "BusinessChoice",
     price: 179.99,
     category: "formal",
-    images: [
-      "https://images.unsplash.com/photo-1582897085656-c5ab6d031d8f?w=800",
-    ],
+    images: ["https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800"],
     sizes: [7, 8, 9, 10, 11, 12],
     colors: ["Black", "Brown", "Grey"],
     description: "Perfect for business casual dress code.",
@@ -3416,7 +3386,7 @@ export const shoes: Shoe[] = [
     price: 189.99,
     category: "formal",
     images: [
-      "https://images.unsplash.com/photo-1533867368555-0bb8c6d6ec84?w=800",
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800",
     ],
     sizes: [7, 8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],
@@ -3436,9 +3406,7 @@ export const shoes: Shoe[] = [
     brand: "BitFormal",
     price: 179.99,
     category: "formal",
-    images: [
-      "https://images.unsplash.com/photo-1582897085656-c5ab6d031d8f?w=800",
-    ],
+    images: ["https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800"],
     sizes: [7, 8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],
     description: "Traditional bit loafer for formal occasions.",
@@ -3474,7 +3442,7 @@ export const shoes: Shoe[] = [
     price: 209.99,
     category: "formal",
     images: [
-      "https://images.unsplash.com/photo-1533867368555-0bb8c6d6ec84?w=800",
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800",
     ],
     sizes: [8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],
@@ -3494,9 +3462,7 @@ export const shoes: Shoe[] = [
     brand: "DresserElite",
     price: 199.99,
     category: "formal",
-    images: [
-      "https://images.unsplash.com/photo-1582897085656-c5ab6d031d8f?w=800",
-    ],
+    images: ["https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800"],
     sizes: [7, 8, 9, 10, 11, 12],
     colors: ["Black", "Brown", "Cognac"],
     description: "Premium leather dresser shoe for formal events.",
@@ -3532,7 +3498,7 @@ export const shoes: Shoe[] = [
     price: 179.99,
     category: "formal",
     images: [
-      "https://images.unsplash.com/photo-1533867368555-0bb8c6d6ec84?w=800",
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800",
     ],
     sizes: [7, 8, 9, 10, 11, 12, 13],
     colors: ["Black", "Brown"],
@@ -3552,9 +3518,7 @@ export const shoes: Shoe[] = [
     brand: "BlackTieFormal",
     price: 229.99,
     category: "formal",
-    images: [
-      "https://images.unsplash.com/photo-1582897085656-c5ab6d031d8f?w=800",
-    ],
+    images: ["https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800"],
     sizes: [8, 9, 10, 11, 12],
     colors: ["Black"],
     description: "Ultimate formal wear for black-tie events.",
@@ -3595,7 +3559,7 @@ export const shoes: Shoe[] = [
     price: 199.99,
     category: "formal",
     images: [
-      "https://images.unsplash.com/photo-1533867368555-0bb8c6d6ec84?w=800",
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800",
     ],
     sizes: [8, 9, 10, 11, 12],
     colors: ["Brown", "Burgundy"],
@@ -3615,9 +3579,7 @@ export const shoes: Shoe[] = [
     brand: "OxbloodDress",
     price: 189.99,
     category: "formal",
-    images: [
-      "https://images.unsplash.com/photo-1582897085656-c5ab6d031d8f?w=800",
-    ],
+    images: ["https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800"],
     sizes: [7, 8, 9, 10, 11, 12],
     colors: ["Oxblood"],
     description: "Bold oxblood formal shoe for the confident.",
@@ -3653,7 +3615,7 @@ export const shoes: Shoe[] = [
     price: 179.99,
     category: "formal",
     images: [
-      "https://images.unsplash.com/photo-1533867368555-0bb8c6d6ec84?w=800",
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800",
     ],
     sizes: [7, 8, 9, 10, 11, 12, 13],
     colors: ["Black", "Brown"],
@@ -3673,9 +3635,7 @@ export const shoes: Shoe[] = [
     brand: "HeritageShoes",
     price: 209.99,
     category: "formal",
-    images: [
-      "https://images.unsplash.com/photo-1582897085656-c5ab6d031d8f?w=800",
-    ],
+    images: ["https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800"],
     sizes: [8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],
     description: "Time-honored oxford with rich heritage.",
@@ -3711,7 +3671,7 @@ export const shoes: Shoe[] = [
     price: 179.99,
     category: "formal",
     images: [
-      "https://images.unsplash.com/photo-1533867368555-0bb8c6d6ec84?w=800",
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800",
     ],
     sizes: [7, 8, 9, 10, 11, 12, 13],
     colors: ["Black", "Brown"],
@@ -3731,9 +3691,7 @@ export const shoes: Shoe[] = [
     brand: "SheenFormal",
     price: 199.99,
     category: "formal",
-    images: [
-      "https://images.unsplash.com/photo-1582897085656-c5ab6d031d8f?w=800",
-    ],
+    images: ["https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800"],
     sizes: [8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],
     description: "High-sheen formal shoe for polished elegance.",
@@ -3764,7 +3722,7 @@ export const shoes: Shoe[] = [
     price: 189.99,
     category: "formal",
     images: [
-      "https://images.unsplash.com/photo-1533867368555-0bb8c6d6ec84?w=800",
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800",
     ],
     sizes: [7, 8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],
@@ -3784,9 +3742,7 @@ export const shoes: Shoe[] = [
     brand: "ElegantStyle",
     price: 189.99,
     category: "formal",
-    images: [
-      "https://images.unsplash.com/photo-1582897085656-c5ab6d031d8f?w=800",
-    ],
+    images: ["https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800"],
     sizes: [7, 8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],
     description: "Elegant derby shoe for formal occasions.",
@@ -3817,7 +3773,7 @@ export const shoes: Shoe[] = [
     price: 209.99,
     category: "formal",
     images: [
-      "https://images.unsplash.com/photo-1533867368555-0bb8c6d6ec84?w=800",
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800",
     ],
     sizes: [8, 9, 10, 11, 12],
     colors: ["Black", "Brown", "Cognac"],
@@ -3837,9 +3793,7 @@ export const shoes: Shoe[] = [
     brand: "PerfectDress",
     price: 189.99,
     category: "formal",
-    images: [
-      "https://images.unsplash.com/photo-1582897085656-c5ab6d031d8f?w=800",
-    ],
+    images: ["https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800"],
     sizes: [7, 8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],
     description: "Perfectly styled dress shoe for any formal event.",
@@ -3870,7 +3824,7 @@ export const shoes: Shoe[] = [
     price: 209.99,
     category: "formal",
     images: [
-      "https://images.unsplash.com/photo-1533867368555-0bb8c6d6ec84?w=800",
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800",
     ],
     sizes: [8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],
@@ -3885,9 +3839,7 @@ export const shoes: Shoe[] = [
     brand: "NobleFormal",
     price: 219.99,
     category: "formal",
-    images: [
-      "https://images.unsplash.com/photo-1582897085656-c5ab6d031d8f?w=800",
-    ],
+    images: ["https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800"],
     sizes: [8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],
     description: "Noble formal shoe for dignified appearance.",
@@ -3923,7 +3875,7 @@ export const shoes: Shoe[] = [
     price: 199.99,
     category: "formal",
     images: [
-      "https://images.unsplash.com/photo-1533867368555-0bb8c6d6ec84?w=800",
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800",
     ],
     sizes: [8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],
@@ -3938,9 +3890,7 @@ export const shoes: Shoe[] = [
     brand: "QualityWear",
     price: 189.99,
     category: "formal",
-    images: [
-      "https://images.unsplash.com/photo-1582897085656-c5ab6d031d8f?w=800",
-    ],
+    images: ["https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800"],
     sizes: [7, 8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],
     description: "Quality dresser shoe built to last.",
@@ -3971,7 +3921,7 @@ export const shoes: Shoe[] = [
     price: 199.99,
     category: "formal",
     images: [
-      "https://images.unsplash.com/photo-1533867368555-0bb8c6d6ec84?w=800",
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800",
     ],
     sizes: [7, 8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],
@@ -3986,9 +3936,7 @@ export const shoes: Shoe[] = [
     brand: "EdgeFormal",
     price: 189.99,
     category: "formal",
-    images: [
-      "https://images.unsplash.com/photo-1582897085656-c5ab6d031d8f?w=800",
-    ],
+    images: ["https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800"],
     sizes: [7, 8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],
     description: "Formal shoe with a contemporary edge.",
@@ -4019,7 +3967,7 @@ export const shoes: Shoe[] = [
     price: 189.99,
     category: "formal",
     images: [
-      "https://images.unsplash.com/photo-1533867368555-0bb8c6d6ec84?w=800",
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800",
     ],
     sizes: [7, 8, 9, 10, 11, 12, 13],
     colors: ["Black", "Brown"],
@@ -4034,9 +3982,7 @@ export const shoes: Shoe[] = [
     brand: "DistinguishedFormal",
     price: 219.99,
     category: "formal",
-    images: [
-      "https://images.unsplash.com/photo-1582897085656-c5ab6d031d8f?w=800",
-    ],
+    images: ["https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800"],
     sizes: [8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],
     description: "Distinguished formal wear for the elite.",
@@ -4072,7 +4018,7 @@ export const shoes: Shoe[] = [
     price: 229.99,
     category: "formal",
     images: [
-      "https://images.unsplash.com/photo-1533867368555-0bb8c6d6ec84?w=800",
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800",
     ],
     sizes: [8, 9, 10, 11, 12],
     colors: ["Black", "Brown", "Cognac"],
@@ -4092,9 +4038,7 @@ export const shoes: Shoe[] = [
     brand: "VictoryFormal",
     price: 199.99,
     category: "formal",
-    images: [
-      "https://images.unsplash.com/photo-1582897085656-c5ab6d031d8f?w=800",
-    ],
+    images: ["https://images.unsplash.com/photo-1549298916-b41d501d3772?w=800"],
     sizes: [8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],
     description: "Victory in formal style and elegance.",
@@ -4130,7 +4074,7 @@ export const shoes: Shoe[] = [
     price: 209.99,
     category: "formal",
     images: [
-      "https://images.unsplash.com/photo-1533867368555-0bb8c6d6ec84?w=800",
+      "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800",
     ],
     sizes: [7, 8, 9, 10, 11, 12],
     colors: ["Black", "Brown"],

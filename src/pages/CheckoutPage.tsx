@@ -1,7 +1,13 @@
 import { useEffect, useState, type ChangeEvent, type FormEvent } from "react";
 import { useLocation, useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { CreditCard, Banknote, ArrowLeft, ShoppingBag } from "lucide-react";
+import {
+  CreditCard,
+  Banknote,
+  ArrowLeft,
+  ShoppingBag,
+  Loader2,
+} from "lucide-react";
 import type { OrderSummary } from "../types";
 import {
   validateCardNumber,
@@ -10,10 +16,16 @@ import {
   formatCardNumber,
   formatExpiryDate,
 } from "../utils/validation";
+import { useAuth } from "../context/AuthContext";
+import { useCart } from "../context/CartContext";
+
+const API_URL = import.meta.env.VITE_API_URL || "http://localhost:1337/api";
 
 const CheckoutPage = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { isAuthenticated, token } = useAuth();
+  const { clearCart } = useCart();
   const orderData = location.state as OrderSummary | null;
 
   const [paymentMethod, setPaymentMethod] = useState<"card" | "cash">("card");
@@ -30,12 +42,13 @@ const CheckoutPage = () => {
     cvv: "",
   });
   const [showErrors, setShowErrors] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Redirect to cart if no order data
   useEffect(() => {
     if (
       !orderData ||
@@ -45,6 +58,12 @@ const CheckoutPage = () => {
       navigate("/cart");
     }
   }, [orderData, navigate]);
+
+  useEffect(() => {
+    if (!isAuthenticated && !isSubmitting) {
+      navigate("/login?redirect=/checkout");
+    }
+  }, [isAuthenticated, navigate, isSubmitting]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -60,24 +79,21 @@ const CheckoutPage = () => {
 
     setFormData((prev) => ({ ...prev, [name]: formattedValue }));
 
-    // Clear error for this field
     if (showErrors && formErrors[name as keyof typeof formErrors]) {
       setFormErrors((prev) => ({ ...prev, [name]: "" }));
     }
   };
 
-  const handleSubmit = (e?: FormEvent) => {
+  const handleSubmit = async (e?: FormEvent) => {
     if (e) {
       e.preventDefault();
     }
 
     if (paymentMethod === "cash") {
-      // No validation needed for cash on delivery
-      proceedToSuccess();
+      await proceedToSuccess();
       return;
     }
 
-    // Validate card payment
     const errors = {
       cardNumber: "",
       cardholderName: "",
@@ -85,20 +101,23 @@ const CheckoutPage = () => {
       cvv: "",
     };
 
-    if (!validateCardNumber(formData.cardNumber)) {
-      errors.cardNumber = "Please enter a valid 16-digit card number";
+    const cardResult = validateCardNumber(formData.cardNumber);
+    if (!cardResult.valid) {
+      errors.cardNumber = cardResult.error || "Invalid card number";
     }
 
     if (formData.cardholderName.trim().length < 3) {
       errors.cardholderName = "Name must be at least 3 characters";
     }
 
-    if (!validateExpiryDate(formData.expiryDate)) {
-      errors.expiryDate = "Please enter a valid expiry date (MM/YY)";
+    const expiryResult = validateExpiryDate(formData.expiryDate);
+    if (!expiryResult.valid) {
+      errors.expiryDate = expiryResult.error || "Invalid expiry date";
     }
 
-    if (!validateCVV(formData.cvv)) {
-      errors.cvv = "CVV must be 3 digits";
+    const cvvResult = validateCVV(formData.cvv);
+    if (!cvvResult.valid) {
+      errors.cvv = cvvResult.error || "Invalid CVV";
     }
 
     const hasErrors = Object.values(errors).some((error) => error !== "");
@@ -109,29 +128,92 @@ const CheckoutPage = () => {
       return;
     }
 
-    proceedToSuccess();
+    await proceedToSuccess();
   };
 
-  const proceedToSuccess = () => {
-    navigate("/order-processing", {
-      state: {
-        ...orderData,
+  const proceedToSuccess = async () => {
+    if (!isAuthenticated || !token || !orderData) {
+      return;
+    }
+
+    setIsSubmitting(true);
+    setError(null);
+
+    try {
+      const orderPayload = {
+        items: orderData.cartItems.map((item) => ({
+          shoe: item.shoe.id,
+          size: item.size,
+          color: item.color,
+          quantity: item.quantity,
+          price: item.shoe.price,
+        })),
+        shippingAddress: orderData.shippingAddress || {},
+        billingAddress: orderData.billingAddress || {},
         paymentMethod:
           paymentMethod === "card" ? "Credit Card" : "Cash on Delivery",
-        orderDate: new Date(),
-        orderId: `ORD-${Date.now()}`,
-      },
-    });
+        subtotal: orderData.subtotal,
+        shipping: orderData.shipping,
+        tax: orderData.tax,
+        total: orderData.total,
+      };
+
+      const response = await fetch(`${API_URL}/orders`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ data: orderPayload }),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error?.message || "Failed to create order");
+      }
+
+      const orderResult = await response.json();
+      clearCart();
+
+      navigate("/order-success", {
+        state: {
+          orderId: orderResult.orderNumber,
+          orderDate: new Date(),
+          cartItems: orderData.cartItems,
+          subtotal: orderData.subtotal,
+          shipping: orderData.shipping,
+          tax: orderData.tax,
+          total: orderData.total,
+          voucherDiscount: orderData.voucherDiscount,
+          appliedVoucher: orderData.appliedVoucher,
+          paymentMethod:
+            paymentMethod === "card" ? "Credit Card" : "Cash on Delivery",
+          country: orderData.country,
+        },
+      });
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to create order";
+      setError(errorMessage);
+      setIsSubmitting(false);
+    }
   };
 
   if (!orderData) {
     return null;
   }
 
+  if (!isAuthenticated) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 className="w-8 h-8 animate-spin text-primary" />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen py-8" data-testid="checkout-page">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
         <div className="mb-8">
           <Link
             to="/cart"
@@ -149,15 +231,19 @@ const CheckoutPage = () => {
           <p className="text-gray-600 mt-2">Complete your order</p>
         </div>
 
+        {error && (
+          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-600">
+            {error}
+          </div>
+        )}
+
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* Payment Section */}
           <div className="lg:col-span-2">
             <div className="bg-white rounded-xl shadow-sm p-6">
               <h2 className="text-2xl font-display font-bold mb-6">
                 Payment Method
               </h2>
 
-              {/* Payment Method Selection */}
               <div className="space-y-4 mb-8">
                 <motion.label
                   className={`flex items-center gap-4 p-4 border-2 rounded-lg cursor-pointer transition-all ${
@@ -202,7 +288,6 @@ const CheckoutPage = () => {
                 </motion.label>
               </div>
 
-              {/* Card Form */}
               {paymentMethod === "card" && (
                 <motion.form
                   initial={{ opacity: 0, height: 0 }}
@@ -315,7 +400,7 @@ const CheckoutPage = () => {
                   className="bg-green-50 border border-green-200 rounded-lg p-4"
                 >
                   <p className="text-green-900 font-medium">
-                    ✓ You will pay in cash when your order arrives
+                    You will pay in cash when your order arrives
                   </p>
                   <p className="text-green-700 text-sm mt-2">
                     Please keep the exact amount ready for a smooth delivery
@@ -326,7 +411,6 @@ const CheckoutPage = () => {
             </div>
           </div>
 
-          {/* Order Summary */}
           <div className="lg:col-span-1">
             <div className="bg-white rounded-xl shadow-sm p-6 sticky top-20">
               <h2 className="text-2xl font-display font-bold mb-6">
@@ -406,10 +490,20 @@ const CheckoutPage = () => {
 
               <button
                 onClick={handleSubmit}
-                className="w-full btn-accent text-lg mt-6"
+                disabled={isSubmitting}
+                className="w-full btn-accent text-lg mt-6 disabled:opacity-50 flex items-center justify-center"
               >
-                <ShoppingBag className="w-5 h-5 inline mr-2" />
-                Place Order
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin mr-2" />
+                    Processing...
+                  </>
+                ) : (
+                  <>
+                    <ShoppingBag className="w-5 h-5 inline mr-2" />
+                    Place Order
+                  </>
+                )}
               </button>
 
               <p className="text-xs text-gray-500 text-center mt-4">

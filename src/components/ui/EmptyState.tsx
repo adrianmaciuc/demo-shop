@@ -31,6 +31,7 @@ export default function EmptyState({
         initial={showAnimation ? { scale: 0 } : { scale: 1 }}
         animate={{ scale: 1 }}
         transition={{ duration: 0.5, delay: 0.1, type: "spring" }}
+        data-testid="empty-state-icon"
       >
         <Icon className="w-10 h-10 text-gray-400" />
       </motion.div>

@@ -1,13 +1,16 @@
 import { Link } from "react-router-dom";
-import { ShoppingCart, Menu, X, Heart } from "lucide-react";
+import { ShoppingCart, Menu, X, Heart, User, LogOut } from "lucide-react";
 import { useState } from "react";
 import { useCart } from "../../context/CartContext";
 import { useWishlist } from "../../context/WishlistContext";
+import { useAuth } from "../../context/AuthContext";
 
 const Navigation = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
   const { getCartItemCount } = useCart();
   const { getWishlistCount } = useWishlist();
+  const { isAuthenticated, user, logout } = useAuth();
   const cartItemCount = getCartItemCount();
   const wishlistCount = getWishlistCount();
 
@@ -19,6 +22,11 @@ const Navigation = () => {
     { name: "Boots", path: "/category/boots" },
   ];
 
+  const handleLogout = () => {
+    logout();
+    setUserMenuOpen(false);
+  };
+
   return (
     <nav
       className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-gray-200"
@@ -26,7 +34,6 @@ const Navigation = () => {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
           <Link
             to="/"
             className="text-2xl font-display font-bold tracking-tight"
@@ -36,7 +43,6 @@ const Navigation = () => {
             Apex Shoes
           </Link>
 
-          {/* Desktop Navigation */}
           <div
             className="hidden md:flex items-center space-x-8"
             data-testid="nav-desktop-menu"
@@ -53,7 +59,6 @@ const Navigation = () => {
             ))}
           </div>
 
-          {/* Right Side Actions */}
           <div
             className="flex items-center space-x-4"
             data-testid="nav-actions"
@@ -105,7 +110,70 @@ const Navigation = () => {
               )}
             </Link>
 
-            {/* Mobile Menu Button */}
+            {isAuthenticated ? (
+              <div className="relative">
+                <button
+                  className="p-2 rounded-full hover:bg-gray-100 transition-colors flex items-center space-x-1"
+                  onClick={() => setUserMenuOpen(!userMenuOpen)}
+                  aria-label="User menu"
+                >
+                  <User className="w-5 h-5" />
+                  <span className="hidden lg:inline text-sm font-medium">
+                    {user?.username}
+                  </span>
+                </button>
+
+                {userMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50">
+                    <Link
+                      to="/profile"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                      onClick={() => setUserMenuOpen(false)}
+                    >
+                      My Profile
+                    </Link>
+                    <Link
+                      to="/orders"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                      onClick={() => setUserMenuOpen(false)}
+                    >
+                      My Orders
+                    </Link>
+                    <Link
+                      to="/wishlist"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+                      onClick={() => setUserMenuOpen(false)}
+                    >
+                      My Wishlist
+                    </Link>
+                    <hr className="my-1" />
+                    <button
+                      onClick={handleLogout}
+                      className="w-full text-left px-4 py-2 text-sm text-red-600 hover:bg-gray-50 flex items-center"
+                    >
+                      <LogOut className="w-4 h-4 mr-2" />
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div className="hidden md:flex items-center space-x-2">
+                <Link
+                  to="/login"
+                  className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 transition-colors"
+                >
+                  Login
+                </Link>
+                <Link
+                  to="/register"
+                  className="px-4 py-2 text-sm font-medium text-white bg-primary rounded-lg hover:opacity-90 transition-colors"
+                >
+                  Register
+                </Link>
+              </div>
+            )}
+
             <button
               className="md:hidden p-2 rounded-full hover:bg-gray-100 transition-colors"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -121,7 +189,6 @@ const Navigation = () => {
           </div>
         </div>
 
-        {/* Mobile Menu */}
         {mobileMenuOpen && (
           <div
             className="md:hidden py-4 space-y-2 border-t border-gray-200"
@@ -138,7 +205,7 @@ const Navigation = () => {
                 {category.name}
               </Link>
             ))}
-            <div className="border-t border-gray-200 pt-2 mt-2">
+            <div className="border-t border-gray-200 pt-2 mt-2 space-y-2">
               <Link
                 to="/about"
                 className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
@@ -155,6 +222,50 @@ const Navigation = () => {
               >
                 Contact
               </Link>
+              {isAuthenticated ? (
+                <>
+                  <Link
+                    to="/profile"
+                    className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    My Profile
+                  </Link>
+                  <Link
+                    to="/orders"
+                    className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    My Orders
+                  </Link>
+                  <button
+                    onClick={() => {
+                      handleLogout();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="w-full text-left px-4 py-2 text-red-600 hover:bg-gray-50 rounded-lg transition-colors"
+                  >
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    to="/login"
+                    className="block px-4 py-2 text-gray-700 hover:bg-gray-50 rounded-lg transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Login
+                  </Link>
+                  <Link
+                    to="/register"
+                    className="block px-4 py-2 text-primary font-medium hover:bg-gray-50 rounded-lg transition-colors"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    Register
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         )}

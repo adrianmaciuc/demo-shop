@@ -9,20 +9,21 @@ const config: Config = {
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/src/$1",
     "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+    "(.+)\\.js$": "$1",
   },
   setupFilesAfterEnv: ["<rootDir>/src/jest.setup.ts"],
   transform: {
     "^.+\\.tsx?$": [
       "ts-jest",
       {
-        tsconfig: {
-          jsx: "react-jsx",
-          esModuleInterop: true,
-          allowSyntheticDefaultImports: true,
-        },
+        tsconfig: "<rootDir>/tsconfig.jest.json",
+        useESM: true,
       },
     ],
   },
+  transformIgnorePatterns: [
+    "node_modules/(?!(.*\\.mjs$|@react-router|react-router))",
+  ],
   collectCoverageFrom: [
     "src/**/*.{ts,tsx}",
     "!src/**/*.d.ts",

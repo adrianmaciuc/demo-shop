@@ -1,0 +1,35 @@
+{
+  "kind": "collectionType",
+  "collectionName": "wishlists",
+  "info": {
+    "singularName": "wishlist",
+    "pluralName": "wishlists",
+    "displayName": "Wishlist",
+    "description": "User wishlist items"
+  },
+  "options": {
+    "draftAndPublish": false
+  },
+  "attributes": {
+    "shoe": {
+      "type": "string",
+      "required": true
+    },
+    "shoeName": {
+      "type": "string"
+    },
+    "shoeImage": {
+      "type": "string"
+    },
+    "shoePrice": {
+      "type": "float"
+    },
+    "addedAt": {
+      "type": "datetime",
+      "default": "now()"
+    },
+    "userId": {
+      "type": "string"
+    }
+  }
+}

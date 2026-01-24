@@ -21,7 +21,8 @@ Repo may have multiple package.json - read them all to fully understand
 Front end is at root level
 Back end is in separate folder called backend
 Testing framework for end to end should have its own tests folder at root level
-Unit tests with hest live in src/__tests__
+Unit tests with jest framework live in src/__tests__
+Playwright tests are in playwright folder
 ```
 
 ### Key Architecture Patterns

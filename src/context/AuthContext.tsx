@@ -62,6 +62,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const parseAuthError = (errorMessage: string): AuthError => {
     const lowerMessage = errorMessage.toLowerCase();
     if (
+      lowerMessage.includes("secret_key_invalid") ||
       lowerMessage.includes("secretkey") ||
       lowerMessage.includes("secret key")
     ) {
